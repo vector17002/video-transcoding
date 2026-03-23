@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Upload Portal</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--surface-color);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        .btn {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.875rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.2s;
+            background: rgba(15, 23, 42, 0.4);
+            margin-bottom: 1.5rem;
+        }
+
+        .file-upload-wrapper.dragover {
+            border-color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .file-upload-text {
+            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-subtext {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        
+        #selected-file-name {
+            display: block;
+            margin-top: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .status-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-color);
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        
+        .btn.loading {
+            color: transparent;
+        }
+        
+        .btn.loading .loader {
+            display: block;
+        }
+
+        .toggle-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--primary-color);
+            font-size: 0.875rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .toggle-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+    <!-- Importing Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Authentication View -->
+    <div class="container" id="auth-view">
+        <div class="header" id="auth-header">
+            <h1 id="auth-title">Welcome Back</h1>
+            <p id="auth-subtitle">Sign in to upload files</p>
+        </div>
+        
+        <form id="auth-form">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn" id="auth-btn">
+                <span id="auth-btn-text">Sign In</span>
+                <div class="loader"></div>
+            </button>
+        </form>
+
+        <a class="toggle-link" id="toggle-auth">Don't have an account? Sign up</a>
+        <div id="auth-status" class="status-message"></div>
+    </div>
+
+    <!-- Upload View -->
+    <div class="container hidden" id="upload-view">
+        <div class="header">
+            <h1>Upload File</h1>
+            <p>Secure direct upload to S3</p>
+        </div>
+        
+        <div class="file-upload-wrapper" id="drop-zone">
+            <input type="file" id="file-input" required>
+            <div class="file-upload-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+            </div>
+            <div class="file-upload-text">Click or drag file to this area to upload</div>
+            <div class="file-upload-subtext">Supports any file type up to 50MB</div>
+            <span id="selected-file-name"></span>
+        </div>
+
+        <button type="button" class="btn" id="upload-btn" disabled>
+            <span>Start Upload</span>
+            <div class="loader"></div>
+        </button>
+        
+        <div class="progress-bar" id="progress-container">
+            <div class="progress-fill" id="progress-bar"></div>
+        </div>
+
+        <div id="upload-status" class="status-message"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api';
+        
+        // DOM Elements
+        const authView = document.getElementById('auth-view');
+        const uploadView = document.getElementById('upload-view');
+        const authForm = document.getElementById('auth-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const authBtn = document.getElementById('auth-btn');
+        const authBtnText = document.getElementById('auth-btn-text');
+        const authStatus = document.getElementById('auth-status');
+        const toggleAuthBtn = document.getElementById('toggle-auth');
+        const authTitle = document.getElementById('auth-title');
+        const authSubtitle = document.getElementById('auth-subtitle');
+        
+        let isLoginMode = true;
+        
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone');
+        const fileNameDisplay = document.getElementById('selected-file-name');
+        const uploadBtn = document.getElementById('upload-btn');
+        const uploadStatus = document.getElementById('upload-status');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+
+        let selectedFile = null;
+
+        // Utilities
+        const showStatus = (element, message, isError = false) => {
+            element.textContent = message;
+            element.className = `status-message show ${isError ? 'status-error' : 'status-success'}`;
+        };
+
+        const hideStatus = (element) => {
+            element.classList.remove('show');
+            setTimeout(() => { element.textContent = ''; element.className = 'status-message'; }, 300);
+        };
+
+        // Check if already logged in (by checking cookie or localStorage)
+        const checkAuth = () => {
+            const cookies = document.cookie.split(';');
+            const hasToken = cookies.some(c => c.trim().startsWith('token=')) || localStorage.getItem('token');
+            if (hasToken) {
+                authView.classList.add('hidden');
+                uploadView.classList.remove('hidden');
+            }
+        };
+        
+        // Check initially
+        checkAuth();
+
+        toggleAuthBtn.addEventListener('click', () => {
+            isLoginMode = !isLoginMode;
+            if (isLoginMode) {
+                authTitle.textContent = 'Welcome Back';
+                authSubtitle.textContent = 'Sign in to upload files';
+                authBtnText.textContent = 'Sign In';
+                toggleAuthBtn.textContent = "Don't have an account? Sign up";
+            } else {
+                authTitle.textContent = 'Create Account';
+                authSubtitle.textContent = 'Sign up to upload files';
+                authBtnText.textContent = 'Sign Up';
+                toggleAuthBtn.textContent = "Already have an account? Sign in";
+            }
+            hideStatus(authStatus);
+        });
+
+        // Handle Auth (Login / Register)
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideStatus(authStatus);
+            authBtn.classList.add('loading');
+            authBtn.disabled = true;
+
+            try {
+                const endpoint = isLoginMode ? '/auth/login' : '/auth/register';
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: emailInput.value,
+                        password: passwordInput.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || (isLoginMode ? 'Login failed' : 'Registration failed'));
+                }
+
+                // Both login and register return { user, token }
+                document.cookie = `token=${data.token}; path=/; max-age=3600`;
+                localStorage.setItem('token', data.token);
+                
+                showStatus(authStatus, isLoginMode ? 'Login successful!' : 'Registration successful!', false);
+                
+                setTimeout(() => {
+                    authView.classList.add('hidden');
+                    uploadView.classList.remove('hidden');
+                }, 1000);
+
+            } catch (error) {
+                showStatus(authStatus, error.message, true);
+            } finally {
+                authBtn.classList.remove('loading');
+                authBtn.disabled = false;
+            }
+        });
+
+        // Handle File Selection
+        const handleFileSelect = (file) => {
+            if (file) {
+                selectedFile = file;
+                fileNameDisplay.textContent = `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                uploadBtn.disabled = false;
+                hideStatus(uploadStatus);
+                progressContainer.style.display = 'none';
+                progressBar.style.width = '0%';
+            }
+        };
+
+        fileInput.addEventListener('change', (e) => {
+            handleFileSelect(e.target.files[0]);
+        });
+
+        // Drag and drop styles
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            let dt = e.dataTransfer;
+            let files = dt.files;
+            handleFileSelect(files[0]);
+            fileInput.files = files; // Sync with file input
+        });
+
+        // Handle Upload
+        uploadBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            hideStatus(uploadStatus);
+            uploadBtn.classList.add('loading');
+            uploadBtn.disabled = true;
+            fileInput.disabled = true;
+
+            try {
+                // 1. Get Presigned URL
+                const urlResponse = await fetch(`${API_BASE}/s3/upload`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+                    },
+                    // Send credentials (cookies) in case localStorage is empty but cookie exists
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        contentType: selectedFile.type || 'application/octet-stream'
+                    })
+                });
+
+                if (!urlResponse.ok) {
+                    if (urlResponse.status === 401) {
+                        // Token expired or invalid
+                        document.cookie = 'token=; Max-Age=0; path=/;';
+                        localStorage.removeItem('token');
+                        uploadView.classList.add('hidden');
+                        authView.classList.remove('hidden');
+                        showStatus(authStatus, 'Session expired. Please log in again.', true);
+                        throw new Error('Unauthorized');
+                    }
+                    throw new Error('Failed to get upload URL');
+                }
+
+                const { url, fileId } = await urlResponse.json();
+
+                // 2. Upload to S3 directly using XMLHttpRequest for progress
+                await new Promise((resolve, reject) => {
+                    progressContainer.style.display = 'block';
+                    const xhr = new XMLHttpRequest();
+                    
+                    xhr.upload.addEventListener("progress", (event) => {
+                        if (event.lengthComputable) {
+                            const percentComplete = (event.loaded / event.total) * 100;
+                            progressBar.style.width = percentComplete + '%';
+                        }
+                    });
+                    
+                    xhr.addEventListener("load", () => {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve(xhr.status);
+                        } else {
+                            reject(new Error(`S3 responded with status ${xhr.status}`));
+                        }
+                    });
+                    
+                    xhr.addEventListener("error", () => reject(new Error("Network error during upload")));
+                    xhr.addEventListener("abort", () => reject(new Error("Upload aborted")));
+                    
+                    xhr.open("PUT", url, true);
+                    xhr.setRequestHeader("Content-Type", selectedFile.type || 'application/octet-stream');
+                    xhr.send(selectedFile);
+                });
+
+                // 3. Notify backend to start processing
+                try {
+                    await fetch(`${API_BASE}/s3/process`, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ fileId })
+                    });
+                } catch(e) {
+                    console.error("Failed to notify backend for processing", e);
+                }
+
+                showStatus(uploadStatus, `Upload successful & processing started! File ID: ${fileId}`, false);
+                
+                // Reset file selection
+                selectedFile = null;
+                fileInput.value = '';
+                fileNameDisplay.textContent = '';
+                
+            } catch (error) {
+                if (error.message !== 'Unauthorized') {
+                    showStatus(uploadStatus, error.message, true);
+                    uploadBtn.disabled = false;
+                }
+                progressContainer.style.display = 'none';
+            } finally {
+                uploadBtn.classList.remove('loading');
+                fileInput.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
