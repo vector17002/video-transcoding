@@ -4,6 +4,7 @@ import { downloadObjectFromPreSignedUrl, getPreSignedUrlForDownload, transcodeVi
 import path from "path";
 import { fileURLToPath } from "url";
 import { exec } from "child_process";
+import { hlsQueue } from "./hls.queue.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,9 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
     console.log(`☁️  Uploading transcoded files to S3 for ${fileId}...`);
     const uploadedKeys = await uploadTranscodedFiles(outputFiles, fileId, userId);
     console.log(`✅ All uploads complete for job ${job.id}. Keys: ${uploadedKeys.join(', ')}`);
+
+    await hlsQueue.add("hls", { fileId, userId })
+    console.log(`HLS job added for fileId ${fileId}`)
 }, {
     connection: redis as any,
 });

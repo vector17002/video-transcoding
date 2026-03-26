@@ -18,11 +18,10 @@ export const getPreSignedUrlForDownload = async (fileId: string, userId: string)
     const videoDownloadSignedUrl = await getDownloadUrl(videoObjectId)
 
     if (!videoDownloadSignedUrl) {
-        throw new Error("Video download signed url not found");
+        throw new Error("Video download signed url not found for transcode job");
     }
 
     return videoDownloadSignedUrl
-
 }
 
 export const downloadObjectFromPreSignedUrl = async (videoDownloadSignedUrl: string, fileId: string, job: Job) => {
@@ -30,7 +29,7 @@ export const downloadObjectFromPreSignedUrl = async (videoDownloadSignedUrl: str
     const response = await axios.get(videoDownloadSignedUrl, { responseType: 'arraybuffer' });
 
     if (response.status !== 200)
-        console.log(`Video download failed for job id ${job.id}`)
+        console.log(`Video download failed for transcode job id ${job.id}`)
 
     const videoBuffer = response.data;
 
@@ -43,7 +42,7 @@ export const downloadObjectFromPreSignedUrl = async (videoDownloadSignedUrl: str
     // Save the buffer to the local repository
     const localFilePath = path.join(downloadsDir, fileId);
     fs.writeFileSync(localFilePath, videoBuffer);
-    console.log(`✅ Video downloaded successfully to ${localFilePath} for job ${job.id}`);
+    console.log(`✅ Video downloaded successfully to ${localFilePath} for transcode job ${job.id}`);
 
     return localFilePath;
 }
