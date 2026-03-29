@@ -66,8 +66,8 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
     const outputFiles = await transcodeVideo(localFilePath, fileId);
     console.log(`✅ All transcoding finished for job ${job.id}. Outputs: ${outputFiles.join(', ')}`)
     console.log(`☁️  Uploading transcoded files to S3 for ${fileId}...`);
-    const uploadedKeys = await uploadTranscodedFiles(outputFiles, fileId, userId);
-    console.log(`✅ All uploads complete for job ${job.id}. Keys: ${uploadedKeys.join(', ')}`);
+    await uploadTranscodedFiles(outputFiles, fileId, userId);
+    console.log(`✅ All uploads complete for job ${job.id}.`);
 
     await hlsQueue.add("hls", { fileId, userId })
     console.log(`HLS job added for fileId ${fileId}`)
