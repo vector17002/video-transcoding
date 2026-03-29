@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -165,7 +166,7 @@
             color: var(--text-muted);
             font-size: 0.8rem;
         }
-        
+
         #selected-file-name {
             display: block;
             margin-top: 1rem;
@@ -206,7 +207,7 @@
             color: var(--success-color);
             border: 1px solid rgba(16, 185, 129, 0.2);
         }
-        
+
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -216,7 +217,7 @@
             overflow: hidden;
             display: none;
         }
-        
+
         .progress-fill {
             height: 100%;
             background: var(--primary-color);
@@ -228,7 +229,7 @@
             display: inline-block;
             width: 1.25rem;
             height: 1.25rem;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: white;
             animation: spin 1s ease-in-out infinite;
@@ -238,11 +239,11 @@
             transform: translate(-50%, -50%);
             display: none;
         }
-        
+
         .btn.loading {
             color: transparent;
         }
-        
+
         .btn.loading .loader {
             display: block;
         }
@@ -264,12 +265,15 @@
         }
 
         @keyframes spin {
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
     </style>
     <!-- Importing Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <!-- Authentication View -->
@@ -278,7 +282,7 @@
             <h1 id="auth-title">Welcome Back</h1>
             <p id="auth-subtitle">Sign in to upload files</p>
         </div>
-        
+
         <form id="auth-form">
             <div class="form-group">
                 <label for="email">Email Address</label>
@@ -304,11 +308,12 @@
             <h1>Upload File</h1>
             <p>Secure direct upload to S3</p>
         </div>
-        
+
         <div class="file-upload-wrapper" id="drop-zone">
             <input type="file" id="file-input" required>
             <div class="file-upload-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
@@ -323,17 +328,21 @@
             <span>Start Upload</span>
             <div class="loader"></div>
         </button>
-        
+
         <div class="progress-bar" id="progress-container">
             <div class="progress-fill" id="progress-bar"></div>
         </div>
 
         <div id="upload-status" class="status-message"></div>
+
+        <button type="button" class="btn" id="logout-btn" style="background: var(--surface-color); color: var(--text-muted); border: 1px solid var(--border-color); margin-top: 1rem;">
+            Logout
+        </button>
     </div>
 
     <script>
         const API_BASE = 'http://localhost:8080/api';
-        
+
         // DOM Elements
         const authView = document.getElementById('auth-view');
         const uploadView = document.getElementById('upload-view');
@@ -346,9 +355,9 @@
         const toggleAuthBtn = document.getElementById('toggle-auth');
         const authTitle = document.getElementById('auth-title');
         const authSubtitle = document.getElementById('auth-subtitle');
-        
+
         let isLoginMode = true;
-        
+
         const fileInput = document.getElementById('file-input');
         const dropZone = document.getElementById('drop-zone');
         const fileNameDisplay = document.getElementById('selected-file-name');
@@ -379,7 +388,7 @@
                 uploadView.classList.remove('hidden');
             }
         };
-        
+
         // Check initially
         checkAuth();
 
@@ -426,9 +435,9 @@
                 // Both login and register return { user, token }
                 document.cookie = `token=${data.token}; path=/; max-age=3600`;
                 localStorage.setItem('token', data.token);
-                
+
                 showStatus(authStatus, isLoginMode ? 'Login successful!' : 'Registration successful!', false);
-                
+
                 setTimeout(() => {
                     authView.classList.add('hidden');
                     uploadView.classList.remove('hidden');
@@ -496,7 +505,7 @@
                 // 1. Get Presigned URL
                 const urlResponse = await fetch(`${API_BASE}/s3/upload`, {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
                     },
@@ -526,14 +535,14 @@
                 await new Promise((resolve, reject) => {
                     progressContainer.style.display = 'block';
                     const xhr = new XMLHttpRequest();
-                    
+
                     xhr.upload.addEventListener("progress", (event) => {
                         if (event.lengthComputable) {
                             const percentComplete = (event.loaded / event.total) * 100;
                             progressBar.style.width = percentComplete + '%';
                         }
                     });
-                    
+
                     xhr.addEventListener("load", () => {
                         if (xhr.status >= 200 && xhr.status < 300) {
                             resolve(xhr.status);
@@ -541,10 +550,10 @@
                             reject(new Error(`S3 responded with status ${xhr.status}`));
                         }
                     });
-                    
+
                     xhr.addEventListener("error", () => reject(new Error("Network error during upload")));
                     xhr.addEventListener("abort", () => reject(new Error("Upload aborted")));
-                    
+
                     xhr.open("PUT", url, true);
                     xhr.setRequestHeader("Content-Type", selectedFile.type || 'application/octet-stream');
                     xhr.send(selectedFile);
@@ -554,24 +563,24 @@
                 try {
                     await fetch(`${API_BASE}/s3/process`, {
                         method: 'POST',
-                        headers: { 
+                        headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
                         },
                         credentials: 'include',
                         body: JSON.stringify({ fileId })
                     });
-                } catch(e) {
+                } catch (e) {
                     console.error("Failed to notify backend for processing", e);
                 }
 
                 showStatus(uploadStatus, `Upload successful & processing started! File ID: ${fileId}`, false);
-                
+
                 // Reset file selection
                 selectedFile = null;
                 fileInput.value = '';
                 fileNameDisplay.textContent = '';
-                
+
             } catch (error) {
                 if (error.message !== 'Unauthorized') {
                     showStatus(uploadStatus, error.message, true);
@@ -583,6 +592,23 @@
                 fileInput.disabled = false;
             }
         });
+
+        // Handle Logout
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                document.cookie = 'token=; Max-Age=0; path=/;';
+                localStorage.removeItem('token');
+                uploadView.classList.add('hidden');
+                authView.classList.remove('hidden');
+                // Clear inputs
+                emailInput.value = '';
+                passwordInput.value = '';
+                hideStatus(authStatus);
+                hideStatus(uploadStatus);
+            });
+        }
     </script>
 </body>
+
 </html>

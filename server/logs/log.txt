@@ -1,0 +1,120 @@
+[2026-03-24T09:07:03.974Z] [LOG] Server is running on port 8080
+[2026-03-24T09:08:20.935Z] [LOG] Server is running on port 8080
+[2026-03-24T09:27:25.359Z] [ERROR] Error: read ECONNRESET
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -54,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[2026-03-24T09:27:25.360Z] [ERROR] Error: read ECONNRESET
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -54,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[2026-03-24T09:35:30.379Z] [ERROR] Error: read ECONNRESET
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -54,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[2026-03-24T09:35:30.381Z] [ERROR] Error: read ECONNRESET
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -54,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[2026-03-24T09:36:10.164Z] [LOG] 📽️ Processing job 2 for fileId bjc8kfmnke612us8g3gmn
+[2026-03-24T09:36:10.164Z] [LOG] ✅ Transcoding completed for job 2
+[2026-03-24T09:36:10.203Z] [LOG] Job 2 has completed successfully!
+[2026-03-24T10:00:37.944Z] [LOG] Server is running on port 8080
+[2026-03-24T10:01:07.829Z] [LOG] 📽️ Processing job 3 for fileId 0330of3lhf4nw4ykrn0ytr
+[2026-03-24T10:01:07.829Z] [LOG] ✅ Transcoding completed for job 3
+[2026-03-24T10:01:07.957Z] [LOG] Job 3 has completed successfully!
+[2026-03-24T10:01:46.508Z] [LOG] Server is running on port 8080
+[2026-03-24T10:02:04.022Z] [LOG] 📽️ Processing job 4 for fileId prxrlkm0nkh61wlyva9hpl
+[2026-03-24T10:02:04.313Z] [LOG] Job 4 has failed with error: The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint.
+[2026-03-24T10:15:04.614Z] [LOG] Server is running on port 8080
+[2026-03-24T10:15:47.344Z] [LOG] 📽️ Processing job 5 for fileId vehuheacw3aj3rsixbmber
+[2026-03-24T10:15:47.655Z] [LOG] <Buffer ff d8 ff e0 00 10 4a 46 49 46 00 01 01 00 00 48 00 48 00 00 ff e1 14 47 45 78 69 66 00 00 4d 4d 00 2a 00 00 00 08 00 06 01 12 00 03 00 00 00 01 00 01 ... 70920 more bytes>
+[2026-03-24T10:15:47.658Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/vehuheacw3aj3rsixbmber for job 5
+[2026-03-24T10:15:47.713Z] [LOG] Job 5 has completed successfully!
+[2026-03-24T11:23:38.742Z] [LOG] Server is running on port 8080
+[2026-03-24T11:24:47.717Z] [LOG] 📽️ Processing job 6 for fileId 3ox4xjswfj3r4s6286mie
+[2026-03-24T11:24:50.891Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3ox4xjswfj3r4s6286mie for job 6
+[2026-03-24T11:24:50.891Z] [LOG] ⏳ Initiating bulk FFmpeg transcodes for 3ox4xjswfj3r4s6286mie...
+[2026-03-24T11:24:50.891Z] [LOG] ⏳ Starting transcode for 1080p (1920x1080)...
+[2026-03-24T11:24:50.893Z] [LOG] ⏳ Starting transcode for 720p (1280x720)...
+[2026-03-24T11:24:50.893Z] [LOG] ⏳ Starting transcode for 480p (854x480)...
+[2026-03-24T11:24:50.893Z] [LOG] ⏳ Starting transcode for 360p (640x360)...
+[2026-03-24T11:25:06.700Z] [LOG] ✅ Finished transcode for 360p
+[2026-03-24T11:25:07.166Z] [LOG] ✅ Finished transcode for 480p
+[2026-03-24T11:25:08.177Z] [LOG] ✅ Finished transcode for 720p
+[2026-03-24T11:25:09.023Z] [LOG] ✅ Finished transcode for 1080p
+[2026-03-24T11:25:09.023Z] [LOG] ✅ All transcoding finished for job 6. Outputs: /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3ox4xjswfj3r4s6286mie_360p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3ox4xjswfj3r4s6286mie_480p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3ox4xjswfj3r4s6286mie_720p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3ox4xjswfj3r4s6286mie_1080p.mp4
+[2026-03-24T11:25:09.062Z] [LOG] Job 6 has completed successfully!
+[2026-03-24T11:39:05.030Z] [LOG] Server is running on port 8080
+[2026-03-24T11:40:20.483Z] [LOG] Server is running on port 8080
+[2026-03-24T11:40:36.711Z] [LOG] 📽️ Processing job 7 for fileId 3pb9gh1ido4pu1hsysrep
+[2026-03-24T11:40:37.932Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3pb9gh1ido4pu1hsysrep for job 7
+[2026-03-24T11:40:37.932Z] [LOG] ⏳ Initiating bulk FFmpeg transcodes for 3pb9gh1ido4pu1hsysrep...
+[2026-03-24T11:40:37.932Z] [LOG] ⏳ Starting transcode for 1080p (1920x1080)...
+[2026-03-24T11:40:37.934Z] [LOG] ⏳ Starting transcode for 720p (1280x720)...
+[2026-03-24T11:40:37.934Z] [LOG] ⏳ Starting transcode for 480p (854x480)...
+[2026-03-24T11:40:37.934Z] [LOG] ⏳ Starting transcode for 360p (640x360)...
+[2026-03-24T11:40:46.811Z] [LOG] ✅ Finished transcode for 360p
+[2026-03-24T11:40:46.994Z] [LOG] ✅ Finished transcode for 480p
+[2026-03-24T11:40:47.546Z] [LOG] ✅ Finished transcode for 720p
+[2026-03-24T11:40:48.532Z] [LOG] ✅ Finished transcode for 1080p
+[2026-03-24T11:40:48.532Z] [LOG] ✅ All transcoding finished for job 7. Outputs: /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3pb9gh1ido4pu1hsysrep_360p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3pb9gh1ido4pu1hsysrep_480p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3pb9gh1ido4pu1hsysrep_720p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/3pb9gh1ido4pu1hsysrep_1080p.mp4
+[2026-03-24T11:40:48.532Z] [LOG] ☁️  Uploading transcoded files to S3 for 3pb9gh1ido4pu1hsysrep...
+[2026-03-24T11:40:48.790Z] [LOG] ☁️  Uploaded 360p to S3: dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/360p.mp4
+[2026-03-24T11:40:48.818Z] [LOG] ☁️  Uploaded 480p to S3: dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/480p.mp4
+[2026-03-24T11:40:48.837Z] [LOG] ☁️  Uploaded 720p to S3: dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/720p.mp4
+[2026-03-24T11:40:48.983Z] [LOG] ☁️  Uploaded 1080p to S3: dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/1080p.mp4
+[2026-03-24T11:40:48.984Z] [LOG] ✅ All transcoded files uploaded to S3 for fileId: 3pb9gh1ido4pu1hsysrep
+[2026-03-24T11:40:48.984Z] [LOG] ✅ All uploads complete for job 7. Keys: dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/360p.mp4, dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/480p.mp4, dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/720p.mp4, dev/users/w56kuucscxi1w740lalw7k/original/3pb9gh1ido4pu1hsysrep/1080p.mp4
+[2026-03-24T11:40:49.024Z] [LOG] Job 7 has completed successfully!
+[2026-03-24T11:48:24.802Z] [LOG] Server is running on port 8080
+[2026-03-24T11:49:20.079Z] [LOG] 📽️ Processing job 8 for fileId nn57mm3xjs369lq4aeuzi
+[2026-03-24T11:49:21.115Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/nn57mm3xjs369lq4aeuzi for job 8
+[2026-03-24T11:49:21.115Z] [LOG] ⏳ Initiating bulk FFmpeg transcodes for nn57mm3xjs369lq4aeuzi...
+[2026-03-24T11:49:21.115Z] [LOG] ⏳ Starting transcode for 1080p (1920x1080)...
+[2026-03-24T11:49:21.116Z] [LOG] ⏳ Starting transcode for 720p (1280x720)...
+[2026-03-24T11:49:21.117Z] [LOG] ⏳ Starting transcode for 480p (854x480)...
+[2026-03-24T11:49:21.117Z] [LOG] ⏳ Starting transcode for 360p (640x360)...
+[2026-03-24T11:49:31.021Z] [LOG] ✅ Finished transcode for 360p
+[2026-03-24T11:49:31.276Z] [LOG] ✅ Finished transcode for 480p
+[2026-03-24T11:49:31.874Z] [LOG] ✅ Finished transcode for 720p
+[2026-03-24T11:49:32.889Z] [LOG] ✅ Finished transcode for 1080p
+[2026-03-24T11:49:32.889Z] [LOG] ✅ All transcoding finished for job 8. Outputs: /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/nn57mm3xjs369lq4aeuzi_360p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/nn57mm3xjs369lq4aeuzi_480p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/nn57mm3xjs369lq4aeuzi_720p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/nn57mm3xjs369lq4aeuzi_1080p.mp4
+[2026-03-24T11:49:32.889Z] [LOG] ☁️  Uploading transcoded files to S3 for nn57mm3xjs369lq4aeuzi...
+[2026-03-24T11:49:33.177Z] [LOG] ☁️  Uploaded 360p to S3: dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/360p.mp4
+[2026-03-24T11:49:33.236Z] [LOG] ☁️  Uploaded 480p to S3: dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/480p.mp4
+[2026-03-24T11:49:33.253Z] [LOG] ☁️  Uploaded 720p to S3: dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/720p.mp4
+[2026-03-24T11:49:33.475Z] [LOG] ☁️  Uploaded 1080p to S3: dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/1080p.mp4
+[2026-03-24T11:49:33.475Z] [LOG] ✅ All transcoded files uploaded to S3 for fileId: nn57mm3xjs369lq4aeuzi
+[2026-03-24T11:49:33.475Z] [LOG] ✅ All uploads complete for job 8. Keys: dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/360p.mp4, dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/480p.mp4, dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/720p.mp4, dev/users/0psyy0j5hh1r2ybnxoyheb/original/nn57mm3xjs369lq4aeuzi/1080p.mp4
+[2026-03-24T11:49:33.517Z] [LOG] Job 8 has completed successfully!
+[2026-03-24T11:49:33.518Z] [LOG] 📽️ Processing job 9 for fileId s4jwrqaneokp1g6k4lntt9
+[2026-03-24T11:49:33.530Z] [LOG] Successfully cleaned up downloads directory
+[2026-03-24T11:49:35.299Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/s4jwrqaneokp1g6k4lntt9 for job 9
+[2026-03-24T11:49:35.299Z] [LOG] ⏳ Initiating bulk FFmpeg transcodes for s4jwrqaneokp1g6k4lntt9...
+[2026-03-24T11:49:35.299Z] [LOG] ⏳ Starting transcode for 1080p (1920x1080)...
+[2026-03-24T11:49:35.299Z] [LOG] ⏳ Starting transcode for 720p (1280x720)...
+[2026-03-24T11:49:35.300Z] [LOG] ⏳ Starting transcode for 480p (854x480)...
+[2026-03-24T11:49:35.300Z] [LOG] ⏳ Starting transcode for 360p (640x360)...
+[2026-03-24T11:49:42.649Z] [LOG] ✅ Finished transcode for 360p
+[2026-03-24T11:49:43.121Z] [LOG] ✅ Finished transcode for 480p
+[2026-03-24T11:49:43.781Z] [LOG] ✅ Finished transcode for 720p
+[2026-03-24T11:49:44.782Z] [LOG] ✅ Finished transcode for 1080p
+[2026-03-24T11:49:44.782Z] [LOG] ✅ All transcoding finished for job 9. Outputs: /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/s4jwrqaneokp1g6k4lntt9_360p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/s4jwrqaneokp1g6k4lntt9_480p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/s4jwrqaneokp1g6k4lntt9_720p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/s4jwrqaneokp1g6k4lntt9_1080p.mp4
+[2026-03-24T11:49:44.782Z] [LOG] ☁️  Uploading transcoded files to S3 for s4jwrqaneokp1g6k4lntt9...
+[2026-03-24T11:49:45.068Z] [LOG] ☁️  Uploaded 360p to S3: dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/360p.mp4
+[2026-03-24T11:49:45.073Z] [LOG] ☁️  Uploaded 480p to S3: dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/480p.mp4
+[2026-03-24T11:49:45.153Z] [LOG] ☁️  Uploaded 720p to S3: dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/720p.mp4
+[2026-03-24T11:49:45.191Z] [LOG] ☁️  Uploaded 1080p to S3: dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/1080p.mp4
+[2026-03-24T11:49:45.191Z] [LOG] ✅ All transcoded files uploaded to S3 for fileId: s4jwrqaneokp1g6k4lntt9
+[2026-03-24T11:49:45.191Z] [LOG] ✅ All uploads complete for job 9. Keys: dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/360p.mp4, dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/480p.mp4, dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/720p.mp4, dev/users/d7dghelm9zwgyeljm9o0o9/original/s4jwrqaneokp1g6k4lntt9/1080p.mp4
+[2026-03-24T11:49:45.221Z] [LOG] Job 9 has completed successfully!
+[2026-03-24T11:49:45.229Z] [LOG] Successfully cleaned up downloads directory
