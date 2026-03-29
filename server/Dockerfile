@@ -1,7 +1,3 @@
-# ──────────────────────────────────────────────────────────
-# Multi-stage Dockerfile for API server & Workers
-# ──────────────────────────────────────────────────────────
-
 # ── Stage 1: Install deps & build ──────────────────────
 FROM node:22-alpine AS builder
 
@@ -37,7 +33,6 @@ COPY --from=builder /app/dist ./dist
 COPY package.json ./
 
 CMD ["node", "dist/index.js"]
-
 
 # ── Stage 3b: Worker (with FFmpeg for transcoding) ─────
 FROM node:22-alpine AS worker
