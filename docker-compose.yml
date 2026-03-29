@@ -1,0 +1,53 @@
+services:
+  # ── Redis ────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── API Server ───────────────────────────────────────────
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: api
+    ports:
+      - "${PORT:-8080}:${PORT:-8080}"
+    env_file:
+      - ./server/.env
+    environment:
+      - IOREDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Workers (transcode + HLS) ───────────────────────────
+  worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: worker
+    env_file:
+      - ./server/.env
+    environment:
+      - IOREDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    # Workers may need more memory for FFmpeg transcoding
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+volumes:
+  redis_data:

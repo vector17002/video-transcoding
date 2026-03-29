@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon dist/index.js",
-    "build": "npx tsc -b",
-    "dev": "npm run build && nodemon dist/index.js"
+    "start": "node dist/index.js",
+    "start:worker": "node dist/worker.js",
+    "build": "tsc -b",
+    "dev": "npm run build && nodemon dist/index.js",
+    "dev:worker": "npm run build && nodemon dist/worker.js"
   },
   "keywords": [],
   "author": "",

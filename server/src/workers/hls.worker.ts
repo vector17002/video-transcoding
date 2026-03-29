@@ -18,8 +18,8 @@ export const hlsWorker = new Worker("hlsQueue", async (job: Job) => {
 
 
         console.log(`☁️  Uploading segmented files to S3 for ${fileId} with ${url.bitrate} bitrate...`);
-        const uploadedKeys = await uploadSegmentedVideos(playlistPath, fileId, userId, url.bitrate);
-        console.log(`✅ All hls uploads complete for job ${job.id}. Keys: ${uploadedKeys}`);
+        await uploadSegmentedVideos(playlistPath, fileId, userId, url.bitrate);
+        console.log(`✅ All hls uploads complete for job ${job.id}.`);
     }));
 
 }, {
