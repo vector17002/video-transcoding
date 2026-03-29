@@ -360,3 +360,325 @@ Error: ENOENT: no such file or directory, open '/Users/anshkumain/Developer/POC/
 [2026-03-26T18:31:55.601Z] [LOG] ✅ All HLS files uploaded to S3 for 47a76ddw00p27bcieb6lpj [1080p]
 [2026-03-26T18:31:55.601Z] [LOG] ✅ All hls uploads complete for job 5. Keys: dev/users/ze3ej8dp2v9j2bi43gm63/47a76ddw00p27bcieb6lpj/1080p/1080p.m3u8,dev/users/ze3ej8dp2v9j2bi43gm63/47a76ddw00p27bcieb6lpj/1080p/segment_000.ts,dev/users/ze3ej8dp2v9j2bi43gm63/47a76ddw00p27bcieb6lpj/1080p/segment_001.ts
 [2026-03-26T18:31:55.641Z] [LOG] Successfully cleaned up hlsDownloads directory
+[2026-03-29T14:41:48.831Z] [LOG] Server is running on port 8080
+[2026-03-29T14:44:16.549Z] [LOG] 📽️ Processing job 1 for fileId xcolv0ia3bezijeod8nhcj
+[2026-03-29T14:44:40.469Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/xcolv0ia3bezijeod8nhcj for transcode job 1
+[2026-03-29T14:44:40.469Z] [LOG] ⏳ Initiating bulk FFmpeg transcodes for xcolv0ia3bezijeod8nhcj...
+[2026-03-29T14:44:40.469Z] [LOG] ⏳ Starting transcode for 1080p (1920x1080)...
+[2026-03-29T14:44:40.471Z] [LOG] ⏳ Starting transcode for 720p (1280x720)...
+[2026-03-29T14:44:40.472Z] [LOG] ⏳ Starting transcode for 480p (854x480)...
+[2026-03-29T14:44:40.473Z] [LOG] ⏳ Starting transcode for 360p (640x360)...
+[2026-03-29T14:44:52.263Z] [LOG] ✅ Finished transcode for 360p
+[2026-03-29T14:44:52.607Z] [LOG] ✅ Finished transcode for 480p
+[2026-03-29T14:44:53.191Z] [LOG] ✅ Finished transcode for 720p
+[2026-03-29T14:44:54.438Z] [LOG] ✅ Finished transcode for 1080p
+[2026-03-29T14:44:54.438Z] [LOG] ✅ All transcoding finished for job 1. Outputs: /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/xcolv0ia3bezijeod8nhcj_360p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/xcolv0ia3bezijeod8nhcj_480p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/xcolv0ia3bezijeod8nhcj_720p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/xcolv0ia3bezijeod8nhcj_1080p.mp4
+[2026-03-29T14:44:54.438Z] [LOG] ☁️  Uploading transcoded files to S3 for xcolv0ia3bezijeod8nhcj...
+[2026-03-29T14:44:54.936Z] [LOG] ☁️  Uploaded 360p to S3: dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/360p.mp4
+[2026-03-29T14:44:55.123Z] [LOG] ☁️  Uploaded 720p to S3: dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/720p.mp4
+[2026-03-29T14:44:55.477Z] [LOG] ☁️  Uploaded 480p to S3: dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/480p.mp4
+[2026-03-29T14:44:56.301Z] [LOG] ☁️  Uploaded 1080p to S3: dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/1080p.mp4
+[2026-03-29T14:44:56.301Z] [LOG] ✅ All transcoded files uploaded to S3 for fileId: xcolv0ia3bezijeod8nhcj
+[2026-03-29T14:44:56.301Z] [LOG] ✅ All uploads complete for job 1. Keys: dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/360p.mp4, dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/720p.mp4, dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/480p.mp4, dev/users/y3ki145rneqxikqntm95in/original/xcolv0ia3bezijeod8nhcj/1080p.mp4
+[2026-03-29T14:44:56.358Z] [LOG] HLS job added for fileId xcolv0ia3bezijeod8nhcj
+[2026-03-29T14:44:56.415Z] [LOG] 📽️ Processing HLS job 1 for fileId xcolv0ia3bezijeod8nhcj
+[2026-03-29T14:44:56.448Z] [LOG] Job 1 has completed successfully!
+[2026-03-29T14:44:56.457Z] [LOG] Successfully cleaned up downloads directory
+[2026-03-29T14:44:56.789Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/360p.mp4 for hls job 1
+[2026-03-29T14:44:56.789Z] [LOG] ⏳ Initiating HLS segmenting for xcolv0ia3bezijeod8nhcj for 360p bitrate...
+[2026-03-29T14:44:56.789Z] [LOG] ⏳ Starting HLS segmentation for xcolv0ia3bezijeod8nhcj [360p]...
+[2026-03-29T14:44:56.820Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/480p.mp4 for hls job 1
+[2026-03-29T14:44:56.820Z] [LOG] ⏳ Initiating HLS segmenting for xcolv0ia3bezijeod8nhcj for 480p bitrate...
+[2026-03-29T14:44:56.820Z] [LOG] ⏳ Starting HLS segmentation for xcolv0ia3bezijeod8nhcj [480p]...
+[2026-03-29T14:44:56.839Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/720p.mp4 for hls job 1
+[2026-03-29T14:44:56.839Z] [LOG] ⏳ Initiating HLS segmenting for xcolv0ia3bezijeod8nhcj for 720p bitrate...
+[2026-03-29T14:44:56.839Z] [LOG] ⏳ Starting HLS segmentation for xcolv0ia3bezijeod8nhcj [720p]...
+[2026-03-29T14:44:56.850Z] [LOG] ✅ HLS segmentation complete for xcolv0ia3bezijeod8nhcj [360p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/360p/360p.m3u8
+[2026-03-29T14:44:56.850Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/360p/360p.m3u8
+[2026-03-29T14:44:56.850Z] [LOG] ☁️  Uploading segmented files to S3 for xcolv0ia3bezijeod8nhcj with 360p bitrate...
+[2026-03-29T14:44:56.877Z] [LOG] 📊 HLS [480p] progress: 100%
+[2026-03-29T14:44:56.878Z] [LOG] ✅ HLS segmentation complete for xcolv0ia3bezijeod8nhcj [480p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/480p/480p.m3u8
+[2026-03-29T14:44:56.878Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/480p/480p.m3u8
+[2026-03-29T14:44:56.878Z] [LOG] ☁️  Uploading segmented files to S3 for xcolv0ia3bezijeod8nhcj with 480p bitrate...
+[2026-03-29T14:44:56.889Z] [LOG] 📊 HLS [720p] progress: 100%
+[2026-03-29T14:44:56.889Z] [LOG] ✅ HLS segmentation complete for xcolv0ia3bezijeod8nhcj [720p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/720p/720p.m3u8
+[2026-03-29T14:44:56.889Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/720p/720p.m3u8
+[2026-03-29T14:44:56.889Z] [LOG] ☁️  Uploading segmented files to S3 for xcolv0ia3bezijeod8nhcj with 720p bitrate...
+[2026-03-29T14:44:57.146Z] [LOG] ☁️  Uploaded 480p.m3u8 to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/480p/480p.m3u8
+[2026-03-29T14:44:57.150Z] [LOG] ☁️  Uploaded 360p.m3u8 to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/360p/360p.m3u8
+[2026-03-29T14:44:57.197Z] [LOG] ☁️  Uploaded 720p.m3u8 to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/720p/720p.m3u8
+[2026-03-29T14:44:57.243Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/1080p.mp4 for hls job 1
+[2026-03-29T14:44:57.243Z] [LOG] ⏳ Initiating HLS segmenting for xcolv0ia3bezijeod8nhcj for 1080p bitrate...
+[2026-03-29T14:44:57.243Z] [LOG] ⏳ Starting HLS segmentation for xcolv0ia3bezijeod8nhcj [1080p]...
+[2026-03-29T14:44:57.252Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/360p/segment_001.ts
+[2026-03-29T14:44:57.279Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/720p/segment_001.ts
+[2026-03-29T14:44:57.281Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/480p/segment_001.ts
+[2026-03-29T14:44:57.292Z] [LOG] 📊 HLS [1080p] progress: 100%
+[2026-03-29T14:44:57.292Z] [LOG] ✅ HLS segmentation complete for xcolv0ia3bezijeod8nhcj [1080p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/1080p/1080p.m3u8
+[2026-03-29T14:44:57.292Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/xcolv0ia3bezijeod8nhcj/1080p/1080p.m3u8
+[2026-03-29T14:44:57.292Z] [LOG] ☁️  Uploading segmented files to S3 for xcolv0ia3bezijeod8nhcj with 1080p bitrate...
+[2026-03-29T14:44:57.434Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/360p/segment_000.ts
+[2026-03-29T14:44:57.435Z] [LOG] ✅ All HLS files uploaded to S3 for xcolv0ia3bezijeod8nhcj [360p]
+[2026-03-29T14:44:57.435Z] [LOG] ✅ All hls uploads complete for job 1. Keys: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/360p/360p.m3u8,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/360p/segment_001.ts,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/360p/segment_000.ts
+[2026-03-29T14:44:57.457Z] [LOG] ☁️  Uploaded 1080p.m3u8 to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/1080p/1080p.m3u8
+[2026-03-29T14:44:57.468Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/480p/segment_000.ts
+[2026-03-29T14:44:57.468Z] [LOG] ✅ All HLS files uploaded to S3 for xcolv0ia3bezijeod8nhcj [480p]
+[2026-03-29T14:44:57.468Z] [LOG] ✅ All hls uploads complete for job 1. Keys: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/480p/480p.m3u8,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/480p/segment_001.ts,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/480p/segment_000.ts
+[2026-03-29T14:44:57.521Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/1080p/segment_001.ts
+[2026-03-29T14:44:57.794Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/1080p/segment_000.ts
+[2026-03-29T14:44:57.794Z] [LOG] ✅ All HLS files uploaded to S3 for xcolv0ia3bezijeod8nhcj [1080p]
+[2026-03-29T14:44:57.794Z] [LOG] ✅ All hls uploads complete for job 1. Keys: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/1080p/1080p.m3u8,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/1080p/segment_001.ts,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/1080p/segment_000.ts
+[2026-03-29T14:44:58.035Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/720p/segment_000.ts
+[2026-03-29T14:44:58.036Z] [LOG] ✅ All HLS files uploaded to S3 for xcolv0ia3bezijeod8nhcj [720p]
+[2026-03-29T14:44:58.036Z] [LOG] ✅ All hls uploads complete for job 1. Keys: dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/720p/720p.m3u8,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/720p/segment_001.ts,dev/users/y3ki145rneqxikqntm95in/xcolv0ia3bezijeod8nhcj/720p/segment_000.ts
+[2026-03-29T14:44:58.102Z] [LOG] Successfully cleaned up hlsDownloads directory
+[2026-03-29T14:51:08.567Z] [LOG] Server is running on port 8080
+[2026-03-29T14:51:38.246Z] [LOG] 
+============================================================
+[2026-03-29T14:51:38.246Z] [LOG] 📽️ Processing job 2 | fileId: erizscz8cof0w7o9roswsci
+[2026-03-29T14:51:38.246Z] [LOG] 🔄 Attempt 1 / 5
+[2026-03-29T14:51:38.246Z] [LOG] ⏰ Timestamp: 2026-03-29T14:51:38.246Z
+[2026-03-29T14:51:38.246Z] [LOG] ============================================================
+[2026-03-29T14:51:38.246Z] [LOG] ❌ 🧪 SIMULATED FAILURE on attempt 1. Will succeed on attempt 3. Next retry in ~5s (exponential backoff).
+[2026-03-29T14:51:38.341Z] [LOG] 
+❌ Job 2 FAILED on attempt 1/5
+[2026-03-29T14:51:38.342Z] [LOG]    Error: 🧪 SIMULATED FAILURE on attempt 1. Will succeed on attempt 3. Next retry in ~5s (exponential backoff).
+[2026-03-29T14:51:38.343Z] [LOG]    ⏳ Next retry in ~5s (exponential backoff: 5s × 2^0)
+[2026-03-29T14:51:43.482Z] [LOG] 
+============================================================
+[2026-03-29T14:51:43.482Z] [LOG] 📽️ Processing job 2 | fileId: erizscz8cof0w7o9roswsci
+[2026-03-29T14:51:43.482Z] [LOG] 🔄 Attempt 2 / 5
+[2026-03-29T14:51:43.482Z] [LOG] ⏰ Timestamp: 2026-03-29T14:51:43.482Z
+[2026-03-29T14:51:43.482Z] [LOG] ============================================================
+[2026-03-29T14:51:43.482Z] [LOG] ❌ 🧪 SIMULATED FAILURE on attempt 2. Will succeed on attempt 3. Next retry in ~10s (exponential backoff).
+[2026-03-29T14:51:43.531Z] [LOG] 
+❌ Job 2 FAILED on attempt 2/5
+[2026-03-29T14:51:43.531Z] [LOG]    Error: 🧪 SIMULATED FAILURE on attempt 2. Will succeed on attempt 3. Next retry in ~10s (exponential backoff).
+[2026-03-29T14:51:43.531Z] [LOG]    ⏳ Next retry in ~10s (exponential backoff: 5s × 2^1)
+[2026-03-29T14:51:53.592Z] [LOG] 
+============================================================
+[2026-03-29T14:51:53.593Z] [LOG] 📽️ Processing job 2 | fileId: erizscz8cof0w7o9roswsci
+[2026-03-29T14:51:53.593Z] [LOG] 🔄 Attempt 3 / 5
+[2026-03-29T14:51:53.593Z] [LOG] ⏰ Timestamp: 2026-03-29T14:51:53.593Z
+[2026-03-29T14:51:53.593Z] [LOG] ============================================================
+[2026-03-29T14:51:53.593Z] [LOG] ✅ 🧪 Attempt 3 — past simulated failure threshold, proceeding normally!
+[2026-03-29T14:52:00.960Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/erizscz8cof0w7o9roswsci for transcode job 2
+[2026-03-29T14:52:00.960Z] [LOG] ⏳ Initiating bulk FFmpeg transcodes for erizscz8cof0w7o9roswsci...
+[2026-03-29T14:52:00.960Z] [LOG] ⏳ Starting transcode for 1080p (1920x1080)...
+[2026-03-29T14:52:00.962Z] [LOG] ⏳ Starting transcode for 720p (1280x720)...
+[2026-03-29T14:52:00.962Z] [LOG] ⏳ Starting transcode for 480p (854x480)...
+[2026-03-29T14:52:00.963Z] [LOG] ⏳ Starting transcode for 360p (640x360)...
+[2026-03-29T14:52:11.077Z] [LOG] ✅ Finished transcode for 360p
+[2026-03-29T14:52:11.314Z] [LOG] ✅ Finished transcode for 480p
+[2026-03-29T14:52:12.071Z] [LOG] ✅ Finished transcode for 720p
+[2026-03-29T14:52:13.097Z] [LOG] ✅ Finished transcode for 1080p
+[2026-03-29T14:52:13.097Z] [LOG] ✅ All transcoding finished for job 2. Outputs: /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/erizscz8cof0w7o9roswsci_360p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/erizscz8cof0w7o9roswsci_480p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/erizscz8cof0w7o9roswsci_720p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/erizscz8cof0w7o9roswsci_1080p.mp4
+[2026-03-29T14:52:13.097Z] [LOG] ☁️  Uploading transcoded files to S3 for erizscz8cof0w7o9roswsci...
+[2026-03-29T14:52:13.662Z] [LOG] ☁️  Uploaded 480p to S3: dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/480p.mp4
+[2026-03-29T14:52:13.744Z] [LOG] ☁️  Uploaded 720p to S3: dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/720p.mp4
+[2026-03-29T14:52:14.101Z] [LOG] ☁️  Uploaded 1080p to S3: dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/1080p.mp4
+[2026-03-29T14:52:14.130Z] [LOG] ☁️  Uploaded 360p to S3: dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/360p.mp4
+[2026-03-29T14:52:14.130Z] [LOG] ✅ All transcoded files uploaded to S3 for fileId: erizscz8cof0w7o9roswsci
+[2026-03-29T14:52:14.130Z] [LOG] ✅ All uploads complete for job 2. Keys: dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/480p.mp4, dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/720p.mp4, dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/1080p.mp4, dev/users/ux6kt6r36hoidrle0a0tmc/original/erizscz8cof0w7o9roswsci/360p.mp4
+[2026-03-29T14:52:14.204Z] [LOG] HLS job added for fileId erizscz8cof0w7o9roswsci
+[2026-03-29T14:52:14.303Z] [LOG] Job 2 has completed successfully!
+[2026-03-29T14:52:14.319Z] [LOG] Successfully cleaned up downloads directory
+[2026-03-29T14:52:14.520Z] [LOG] 📽️ Processing HLS job 2 for fileId erizscz8cof0w7o9roswsci
+[2026-03-29T14:52:15.118Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/1080p.mp4 for hls job 2
+[2026-03-29T14:52:15.118Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 1080p bitrate...
+[2026-03-29T14:52:15.119Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [1080p]...
+[2026-03-29T14:52:15.186Z] [LOG] 📊 HLS [1080p] progress: 100%
+[2026-03-29T14:52:15.186Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [1080p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/1080p/1080p.m3u8
+[2026-03-29T14:52:15.187Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/1080p/1080p.m3u8
+[2026-03-29T14:52:15.187Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 1080p bitrate...
+[2026-03-29T14:52:15.195Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/480p.mp4 for hls job 2
+[2026-03-29T14:52:15.195Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 480p bitrate...
+[2026-03-29T14:52:15.196Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [480p]...
+[2026-03-29T14:52:15.235Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/360p.mp4 for hls job 2
+[2026-03-29T14:52:15.235Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 360p bitrate...
+[2026-03-29T14:52:15.235Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [360p]...
+[2026-03-29T14:52:15.236Z] [LOG] 📊 HLS [480p] progress: 100%
+[2026-03-29T14:52:15.237Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [480p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/480p/480p.m3u8
+[2026-03-29T14:52:15.237Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/480p/480p.m3u8
+[2026-03-29T14:52:15.237Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 480p bitrate...
+[2026-03-29T14:52:15.275Z] [LOG] 📊 HLS [360p] progress: 100%
+[2026-03-29T14:52:15.276Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [360p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/360p/360p.m3u8
+[2026-03-29T14:52:15.276Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/360p/360p.m3u8
+[2026-03-29T14:52:15.276Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 360p bitrate...
+[2026-03-29T14:52:15.375Z] [WARN] An error was encountered in a non-retryable streaming request.
+[2026-03-29T14:52:15.448Z] [WARN] An error was encountered in a non-retryable streaming request.
+[2026-03-29T14:52:15.464Z] [LOG] Job 2 has failed with error: read ECONNRESET
+[2026-03-29T14:52:15.546Z] [LOG] ☁️  Uploaded 480p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/480p.m3u8
+[2026-03-29T14:52:15.547Z] [LOG] ☁️  Uploaded 1080p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/1080p.m3u8
+[2026-03-29T14:52:15.574Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/720p.mp4 for hls job 2
+[2026-03-29T14:52:15.574Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 720p bitrate...
+[2026-03-29T14:52:15.574Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [720p]...
+[2026-03-29T14:52:15.626Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_001.ts
+[2026-03-29T14:52:15.629Z] [LOG] 📊 HLS [720p] progress: 100%
+[2026-03-29T14:52:15.630Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [720p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/720p/720p.m3u8
+[2026-03-29T14:52:15.630Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/720p/720p.m3u8
+[2026-03-29T14:52:15.630Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 720p bitrate...
+[2026-03-29T14:52:15.687Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/segment_001.ts
+[2026-03-29T14:52:15.759Z] [LOG] ☁️  Uploaded 720p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/720p.m3u8
+[2026-03-29T14:52:15.793Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_000.ts
+[2026-03-29T14:52:15.794Z] [LOG] ✅ All HLS files uploaded to S3 for erizscz8cof0w7o9roswsci [480p]
+[2026-03-29T14:52:15.794Z] [LOG] ✅ All hls uploads complete for job 2. Keys: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/480p.m3u8,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_001.ts,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_000.ts
+[2026-03-29T14:52:15.820Z] [LOG] ☁️  Uploaded 360p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/360p.m3u8
+[2026-03-29T14:52:16.066Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_000.ts
+[2026-03-29T14:52:16.179Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_001.ts
+[2026-03-29T14:52:16.179Z] [LOG] ✅ All HLS files uploaded to S3 for erizscz8cof0w7o9roswsci [720p]
+[2026-03-29T14:52:16.179Z] [LOG] ✅ All hls uploads complete for job 2. Keys: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/720p.m3u8,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_000.ts,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_001.ts
+[2026-03-29T14:52:16.451Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/segment_000.ts
+[2026-03-29T14:52:20.518Z] [LOG] 📽️ Processing HLS job 2 for fileId erizscz8cof0w7o9roswsci
+[2026-03-29T14:52:20.908Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/480p.mp4 for hls job 2
+[2026-03-29T14:52:20.909Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 480p bitrate...
+[2026-03-29T14:52:20.909Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [480p]...
+[2026-03-29T14:52:20.919Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/360p.mp4 for hls job 2
+[2026-03-29T14:52:20.919Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 360p bitrate...
+[2026-03-29T14:52:20.919Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [360p]...
+[2026-03-29T14:52:20.979Z] [LOG] 📊 HLS [480p] progress: 100%
+[2026-03-29T14:52:20.980Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/720p.mp4 for hls job 2
+[2026-03-29T14:52:20.980Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 720p bitrate...
+[2026-03-29T14:52:20.980Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [720p]...
+[2026-03-29T14:52:20.981Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [480p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/480p/480p.m3u8
+[2026-03-29T14:52:20.981Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/480p/480p.m3u8
+[2026-03-29T14:52:20.981Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 480p bitrate...
+[2026-03-29T14:52:20.982Z] [LOG] 📊 HLS [360p] progress: 100%
+[2026-03-29T14:52:20.983Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [360p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/360p/360p.m3u8
+[2026-03-29T14:52:20.983Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/360p/360p.m3u8
+[2026-03-29T14:52:20.983Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 360p bitrate...
+[2026-03-29T14:52:21.026Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/1080p.mp4 for hls job 2
+[2026-03-29T14:52:21.026Z] [LOG] ⏳ Initiating HLS segmenting for erizscz8cof0w7o9roswsci for 1080p bitrate...
+[2026-03-29T14:52:21.026Z] [LOG] ⏳ Starting HLS segmentation for erizscz8cof0w7o9roswsci [1080p]...
+[2026-03-29T14:52:21.027Z] [LOG] 📊 HLS [720p] progress: 100%
+[2026-03-29T14:52:21.027Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [720p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/720p/720p.m3u8
+[2026-03-29T14:52:21.027Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/720p/720p.m3u8
+[2026-03-29T14:52:21.027Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 720p bitrate...
+[2026-03-29T14:52:21.071Z] [LOG] 📊 HLS [1080p] progress: 100%
+[2026-03-29T14:52:21.071Z] [LOG] ✅ HLS segmentation complete for erizscz8cof0w7o9roswsci [1080p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/1080p/1080p.m3u8
+[2026-03-29T14:52:21.071Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/erizscz8cof0w7o9roswsci/1080p/1080p.m3u8
+[2026-03-29T14:52:21.071Z] [LOG] ☁️  Uploading segmented files to S3 for erizscz8cof0w7o9roswsci with 1080p bitrate...
+[2026-03-29T14:52:21.105Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_001.ts
+[2026-03-29T14:52:21.135Z] [LOG] ☁️  Uploaded 480p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/480p.m3u8
+[2026-03-29T14:52:21.139Z] [LOG] ☁️  Uploaded 360p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/360p.m3u8
+[2026-03-29T14:52:21.164Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/segment_001.ts
+[2026-03-29T14:52:21.199Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/segment_000.ts
+[2026-03-29T14:52:21.199Z] [LOG] ✅ All HLS files uploaded to S3 for erizscz8cof0w7o9roswsci [360p]
+[2026-03-29T14:52:21.199Z] [LOG] ✅ All hls uploads complete for job 2. Keys: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/360p.m3u8,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/segment_001.ts,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/360p/segment_000.ts
+[2026-03-29T14:52:21.201Z] [LOG] ☁️  Uploaded 720p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/720p.m3u8
+[2026-03-29T14:52:21.312Z] [LOG] ☁️  Uploaded 1080p.m3u8 to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/1080p.m3u8
+[2026-03-29T14:52:21.356Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_001.ts
+[2026-03-29T14:52:21.562Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_000.ts
+[2026-03-29T14:52:21.562Z] [LOG] ✅ All HLS files uploaded to S3 for erizscz8cof0w7o9roswsci [720p]
+[2026-03-29T14:52:21.562Z] [LOG] ✅ All hls uploads complete for job 2. Keys: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/720p.m3u8,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_001.ts,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/720p/segment_000.ts
+[2026-03-29T14:52:21.633Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/segment_001.ts
+[2026-03-29T14:52:21.721Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_000.ts
+[2026-03-29T14:52:21.721Z] [LOG] ✅ All HLS files uploaded to S3 for erizscz8cof0w7o9roswsci [480p]
+[2026-03-29T14:52:21.721Z] [LOG] ✅ All hls uploads complete for job 2. Keys: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_001.ts,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/480p.m3u8,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/480p/segment_000.ts
+[2026-03-29T14:52:22.216Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/segment_000.ts
+[2026-03-29T14:52:22.216Z] [LOG] ✅ All HLS files uploaded to S3 for erizscz8cof0w7o9roswsci [1080p]
+[2026-03-29T14:52:22.216Z] [LOG] ✅ All hls uploads complete for job 2. Keys: dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/1080p.m3u8,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/segment_001.ts,dev/users/ux6kt6r36hoidrle0a0tmc/erizscz8cof0w7o9roswsci/1080p/segment_000.ts
+[2026-03-29T14:52:22.288Z] [LOG] Successfully cleaned up hlsDownloads directory
+[2026-03-29T14:57:08.843Z] [LOG] Server is running on port 8080
+[2026-03-29T14:57:36.935Z] [LOG] 
+============================================================
+[2026-03-29T14:57:36.936Z] [LOG] 📽️ Processing job 3 | fileId: i79oyab6j9o6x8kbfedx
+[2026-03-29T14:57:36.936Z] [LOG] 🔄 Attempt 1 / 5
+[2026-03-29T14:57:36.936Z] [LOG] ⏰ Timestamp: 2026-03-29T14:57:36.936Z
+[2026-03-29T14:57:36.936Z] [LOG] ============================================================
+[2026-03-29T14:57:36.936Z] [LOG] ❌ 🧪 SIMULATED FAILURE on attempt 1. Will succeed on attempt 3. Next retry in ~3.0s (exponential backoff).
+[2026-03-29T14:57:37.020Z] [LOG] 
+❌ Job 3 FAILED on attempt 1/5
+[2026-03-29T14:57:37.020Z] [LOG]    Error: 🧪 SIMULATED FAILURE on attempt 1. Will succeed on attempt 3. Next retry in ~3.0s (exponential backoff).
+[2026-03-29T14:57:37.020Z] [LOG]    ⏳ Next retry in ~3.0s (exponential backoff: 3s × 2^0)
+[2026-03-29T14:57:40.455Z] [LOG] 
+============================================================
+[2026-03-29T14:57:40.455Z] [LOG] 📽️ Processing job 3 | fileId: i79oyab6j9o6x8kbfedx
+[2026-03-29T14:57:40.456Z] [LOG] 🔄 Attempt 2 / 5
+[2026-03-29T14:57:40.456Z] [LOG] ⏰ Timestamp: 2026-03-29T14:57:40.456Z
+[2026-03-29T14:57:40.456Z] [LOG] ⏱️  Time since last attempt: 3.5s (expected: ~3.0s)
+[2026-03-29T14:57:40.456Z] [LOG] ============================================================
+[2026-03-29T14:57:40.456Z] [LOG] ❌ 🧪 SIMULATED FAILURE on attempt 2. Will succeed on attempt 3. Next retry in ~6.0s (exponential backoff).
+[2026-03-29T14:57:40.522Z] [LOG] 
+❌ Job 3 FAILED on attempt 2/5
+[2026-03-29T14:57:40.522Z] [LOG]    Error: 🧪 SIMULATED FAILURE on attempt 2. Will succeed on attempt 3. Next retry in ~6.0s (exponential backoff).
+[2026-03-29T14:57:40.522Z] [LOG]    ⏳ Next retry in ~6.0s (exponential backoff: 3s × 2^1)
+[2026-03-29T14:57:46.618Z] [LOG] 
+============================================================
+[2026-03-29T14:57:46.618Z] [LOG] 📽️ Processing job 3 | fileId: i79oyab6j9o6x8kbfedx
+[2026-03-29T14:57:46.618Z] [LOG] 🔄 Attempt 3 / 5
+[2026-03-29T14:57:46.618Z] [LOG] ⏰ Timestamp: 2026-03-29T14:57:46.618Z
+[2026-03-29T14:57:46.618Z] [LOG] ⏱️  Time since last attempt: 6.2s (expected: ~6.0s)
+[2026-03-29T14:57:46.618Z] [LOG] ============================================================
+[2026-03-29T14:57:46.618Z] [LOG] ✅ 🧪 Attempt 3 — past simulated failure threshold, proceeding normally!
+[2026-03-29T14:58:25.107Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/i79oyab6j9o6x8kbfedx for transcode job 3
+[2026-03-29T14:58:25.107Z] [LOG] ⏳ Initiating bulk FFmpeg transcodes for i79oyab6j9o6x8kbfedx...
+[2026-03-29T14:58:25.107Z] [LOG] ⏳ Starting transcode for 1080p (1920x1080)...
+[2026-03-29T14:58:25.109Z] [LOG] ⏳ Starting transcode for 720p (1280x720)...
+[2026-03-29T14:58:25.109Z] [LOG] ⏳ Starting transcode for 480p (854x480)...
+[2026-03-29T14:58:25.109Z] [LOG] ⏳ Starting transcode for 360p (640x360)...
+[2026-03-29T14:58:36.024Z] [LOG] ✅ Finished transcode for 360p
+[2026-03-29T14:58:36.066Z] [LOG] ✅ Finished transcode for 480p
+[2026-03-29T14:58:37.067Z] [LOG] ✅ Finished transcode for 720p
+[2026-03-29T14:58:38.001Z] [LOG] ✅ Finished transcode for 1080p
+[2026-03-29T14:58:38.001Z] [LOG] ✅ All transcoding finished for job 3. Outputs: /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/i79oyab6j9o6x8kbfedx_360p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/i79oyab6j9o6x8kbfedx_480p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/i79oyab6j9o6x8kbfedx_720p.mp4, /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/downloads/i79oyab6j9o6x8kbfedx_1080p.mp4
+[2026-03-29T14:58:38.001Z] [LOG] ☁️  Uploading transcoded files to S3 for i79oyab6j9o6x8kbfedx...
+[2026-03-29T14:58:38.534Z] [LOG] ☁️  Uploaded 360p to S3: dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/360p.mp4
+[2026-03-29T14:58:38.572Z] [LOG] ☁️  Uploaded 480p to S3: dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/480p.mp4
+[2026-03-29T14:58:38.960Z] [LOG] ☁️  Uploaded 720p to S3: dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/720p.mp4
+[2026-03-29T14:58:39.019Z] [LOG] ☁️  Uploaded 1080p to S3: dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/1080p.mp4
+[2026-03-29T14:58:39.020Z] [LOG] ✅ All transcoded files uploaded to S3 for fileId: i79oyab6j9o6x8kbfedx
+[2026-03-29T14:58:39.020Z] [LOG] ✅ All uploads complete for job 3. Keys: dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/360p.mp4, dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/480p.mp4, dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/720p.mp4, dev/users/i0bcemn4itomyvyx5hhhvk/original/i79oyab6j9o6x8kbfedx/1080p.mp4
+[2026-03-29T14:58:39.063Z] [LOG] HLS job added for fileId i79oyab6j9o6x8kbfedx
+[2026-03-29T14:58:39.066Z] [LOG] 📽️ Processing HLS job 3 for fileId i79oyab6j9o6x8kbfedx
+[2026-03-29T14:58:39.150Z] [LOG] Job 3 has completed successfully!
+[2026-03-29T14:58:39.156Z] [LOG] Successfully cleaned up downloads directory
+[2026-03-29T14:58:39.346Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/360p.mp4 for hls job 3
+[2026-03-29T14:58:39.346Z] [LOG] ⏳ Initiating HLS segmenting for i79oyab6j9o6x8kbfedx for 360p bitrate...
+[2026-03-29T14:58:39.347Z] [LOG] ⏳ Starting HLS segmentation for i79oyab6j9o6x8kbfedx [360p]...
+[2026-03-29T14:58:39.413Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/480p.mp4 for hls job 3
+[2026-03-29T14:58:39.413Z] [LOG] ⏳ Initiating HLS segmenting for i79oyab6j9o6x8kbfedx for 480p bitrate...
+[2026-03-29T14:58:39.413Z] [LOG] ⏳ Starting HLS segmentation for i79oyab6j9o6x8kbfedx [480p]...
+[2026-03-29T14:58:39.415Z] [LOG] 📊 HLS [360p] progress: 100%
+[2026-03-29T14:58:39.416Z] [LOG] ✅ HLS segmentation complete for i79oyab6j9o6x8kbfedx [360p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/360p/360p.m3u8
+[2026-03-29T14:58:39.416Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/360p/360p.m3u8
+[2026-03-29T14:58:39.416Z] [LOG] ☁️  Uploading segmented files to S3 for i79oyab6j9o6x8kbfedx with 360p bitrate...
+[2026-03-29T14:58:39.437Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/720p.mp4 for hls job 3
+[2026-03-29T14:58:39.438Z] [LOG] ⏳ Initiating HLS segmenting for i79oyab6j9o6x8kbfedx for 720p bitrate...
+[2026-03-29T14:58:39.438Z] [LOG] ⏳ Starting HLS segmentation for i79oyab6j9o6x8kbfedx [720p]...
+[2026-03-29T14:58:39.457Z] [LOG] 📊 HLS [480p] progress: 100%
+[2026-03-29T14:58:39.458Z] [LOG] ✅ HLS segmentation complete for i79oyab6j9o6x8kbfedx [480p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/480p/480p.m3u8
+[2026-03-29T14:58:39.458Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/480p/480p.m3u8
+[2026-03-29T14:58:39.458Z] [LOG] ☁️  Uploading segmented files to S3 for i79oyab6j9o6x8kbfedx with 480p bitrate...
+[2026-03-29T14:58:39.481Z] [LOG] 📊 HLS [720p] progress: 100%
+[2026-03-29T14:58:39.482Z] [LOG] ✅ HLS segmentation complete for i79oyab6j9o6x8kbfedx [720p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/720p/720p.m3u8
+[2026-03-29T14:58:39.482Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/720p/720p.m3u8
+[2026-03-29T14:58:39.482Z] [LOG] ☁️  Uploading segmented files to S3 for i79oyab6j9o6x8kbfedx with 720p bitrate...
+[2026-03-29T14:58:39.593Z] [LOG] ✅ Video downloaded successfully to /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/1080p.mp4 for hls job 3
+[2026-03-29T14:58:39.593Z] [LOG] ⏳ Initiating HLS segmenting for i79oyab6j9o6x8kbfedx for 1080p bitrate...
+[2026-03-29T14:58:39.593Z] [LOG] ⏳ Starting HLS segmentation for i79oyab6j9o6x8kbfedx [1080p]...
+[2026-03-29T14:58:39.639Z] [LOG] ☁️  Uploaded 480p.m3u8 to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/480p/480p.m3u8
+[2026-03-29T14:58:39.641Z] [LOG] 📊 HLS [1080p] progress: 100%
+[2026-03-29T14:58:39.642Z] [LOG] ✅ HLS segmentation complete for i79oyab6j9o6x8kbfedx [1080p] → /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/1080p/1080p.m3u8
+[2026-03-29T14:58:39.642Z] [LOG] ✅ HLS playlist created at /Users/anshkumain/Developer/POC/videoThumbnailProcessingPOC/server/hlsDownloads/i79oyab6j9o6x8kbfedx/1080p/1080p.m3u8
+[2026-03-29T14:58:39.642Z] [LOG] ☁️  Uploading segmented files to S3 for i79oyab6j9o6x8kbfedx with 1080p bitrate...
+[2026-03-29T14:58:39.651Z] [LOG] ☁️  Uploaded 360p.m3u8 to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/360p/360p.m3u8
+[2026-03-29T14:58:39.661Z] [LOG] ☁️  Uploaded 720p.m3u8 to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/720p/720p.m3u8
+[2026-03-29T14:58:39.685Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/480p/segment_001.ts
+[2026-03-29T14:58:39.706Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/360p/segment_001.ts
+[2026-03-29T14:58:39.806Z] [LOG] ☁️  Uploaded 1080p.m3u8 to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/1080p/1080p.m3u8
+[2026-03-29T14:58:39.862Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/360p/segment_000.ts
+[2026-03-29T14:58:39.862Z] [LOG] ✅ All HLS files uploaded to S3 for i79oyab6j9o6x8kbfedx [360p]
+[2026-03-29T14:58:39.862Z] [LOG] ✅ All hls uploads complete for job 3. Keys: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/360p/360p.m3u8,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/360p/segment_001.ts,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/360p/segment_000.ts
+[2026-03-29T14:58:39.907Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/720p/segment_000.ts
+[2026-03-29T14:58:39.911Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/480p/segment_000.ts
+[2026-03-29T14:58:39.911Z] [LOG] ✅ All HLS files uploaded to S3 for i79oyab6j9o6x8kbfedx [480p]
+[2026-03-29T14:58:39.911Z] [LOG] ✅ All hls uploads complete for job 3. Keys: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/480p/480p.m3u8,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/480p/segment_001.ts,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/480p/segment_000.ts
+[2026-03-29T14:58:39.974Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/720p/segment_001.ts
+[2026-03-29T14:58:39.974Z] [LOG] ✅ All HLS files uploaded to S3 for i79oyab6j9o6x8kbfedx [720p]
+[2026-03-29T14:58:39.974Z] [LOG] ✅ All hls uploads complete for job 3. Keys: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/720p/720p.m3u8,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/720p/segment_000.ts,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/720p/segment_001.ts
+[2026-03-29T14:58:40.058Z] [LOG] ☁️  Uploaded segment_001.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/1080p/segment_001.ts
+[2026-03-29T14:58:40.307Z] [LOG] ☁️  Uploaded segment_000.ts to S3: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/1080p/segment_000.ts
+[2026-03-29T14:58:40.307Z] [LOG] ✅ All HLS files uploaded to S3 for i79oyab6j9o6x8kbfedx [1080p]
+[2026-03-29T14:58:40.307Z] [LOG] ✅ All hls uploads complete for job 3. Keys: dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/1080p/1080p.m3u8,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/1080p/segment_001.ts,dev/users/i0bcemn4itomyvyx5hhhvk/i79oyab6j9o6x8kbfedx/1080p/segment_000.ts
+[2026-03-29T14:58:40.390Z] [LOG] Successfully cleaned up hlsDownloads directory
