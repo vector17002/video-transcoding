@@ -2,12 +2,8 @@ import { tryCatch, Worker, type Job } from "bullmq";
 import { redis } from "../config/redis.js";
 import { downloadObjectFromPreSignedUrl, getPreSignedUrlForDownload, transcodeVideo, uploadTranscodedFiles } from "../services/transcode.service.js";
 import path from "path";
-import { fileURLToPath } from "url";
-import { exec } from "child_process";
 import { hlsQueue } from "./hls.queue.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { thumbnailQueue } from "./thumbnail.queue.js";
 
 // ──────────────────────────────────────────────────────────
 // 🧪 TEST CONFIG: Simulate failures to observe exponential backoff
@@ -62,15 +58,31 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
 
     const localFilePath = await downloadObjectFromPreSignedUrl(videoDownloadSignedUrl, fileId, job)
 
+    // Starting creating thumbnail for the video
+    await thumbnailQueue.add("thumbnail", { fileId, userId, localFilePath });
+    console.log(`Thumbnail job added for fileId ${fileId} with ${localFilePath} local file`);
+
+    // Starting transcode for the video
     console.log(`⏳ Initiating bulk FFmpeg transcodes for ${fileId}...`);
     const outputFiles = await transcodeVideo(localFilePath, fileId);
-    console.log(`✅ All transcoding finished for job ${job.id}. Outputs: ${outputFiles.join(', ')}`)
+    console.log(`✅ All transcoding finished for job ${job.id}.`);
+
+    // Uploading transcoded video
     console.log(`☁️  Uploading transcoded files to S3 for ${fileId}...`);
     await uploadTranscodedFiles(outputFiles, fileId, userId);
     console.log(`✅ All uploads complete for job ${job.id}.`);
 
-    await hlsQueue.add("hls", { fileId, userId })
-    console.log(`HLS job added for fileId ${fileId}`)
+    // Build a map of bitrate → local file path for the HLS worker
+    // so it can segment directly from disk instead of re-downloading from S3
+    const transcodedFiles = outputFiles.map((filePath) => {
+        const fileName = path.basename(filePath);
+        const bitrate = fileName.replace(`${fileId}_`, '').replace('.mp4', '');
+        return { bitrate, localPath: filePath };
+    });
+
+    // Starting HLS for the videos of different bitrate
+    await hlsQueue.add("hls", { fileId, userId, transcodedFiles });
+    console.log(`HLS job added for fileId ${fileId} with ${transcodedFiles.length} local transcoded files`);
 }, {
     connection: redis as any,
     settings: {
@@ -87,17 +99,6 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
 });
 
 transcodeWorker.on("completed", (job) => {
-    exec("rm -rf downloads", (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return;
-        }
-        console.log('Successfully cleaned up downloads directory');
-    })
     console.log(`Job ${job.id} has completed successfully!`);
 });
 

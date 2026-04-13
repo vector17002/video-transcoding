@@ -1,45 +1,64 @@
 import { Worker, type Job } from "bullmq";
 import { redis } from "../config/redis.js";
-import { downloadObjectFromPreSignedUrlWithBitrate, getPreSignedUrlForDownloadHls, segmentVideo, uploadSegmentedVideos } from "../services/hls.service.js";
-import { exec } from "child_process";
+import { segmentVideo, uploadSegmentedVideos } from "../services/hls.service.js";
+import fs from "fs";
+import path from "path";
+
+interface TranscodedFile {
+    bitrate: string;
+    localPath: string;
+}
 
 export const hlsWorker = new Worker("hlsQueue", async (job: Job) => {
-    const { fileId, userId } = job.data;
+    const { fileId, userId, transcodedFiles } = job.data as {
+        fileId: string;
+        userId: string;
+        transcodedFiles: TranscodedFile[];
+    };
+
     console.log(`📽️ Processing HLS job ${job.id} for fileId ${fileId}`);
+    console.log(`📂 Using ${transcodedFiles.length} locally transcoded files (no S3 re-download needed)`);
 
-    const videoDownloadSignedUrls = await getPreSignedUrlForDownloadHls(fileId, userId);
+    await Promise.all(transcodedFiles.map(async ({ bitrate, localPath }) => {
+        // Check if the mp4 has already been deleted (to handle job retries idempotently)
+        if (!fs.existsSync(localPath)) {
+            console.log(`⏭️  Skipping previously completed HLS task for ${fileId} [${bitrate}] (transcoded source deleted)`);
+            return;
+        }
 
-    await Promise.all(videoDownloadSignedUrls.map(async (url) => {
-        const localFilePath = await downloadObjectFromPreSignedUrlWithBitrate(url.url, fileId, job, url.bitrate);
+        console.log(`⏳ Initiating HLS segmenting for ${fileId} [${bitrate}]...`);
+        const playlistPath = await segmentVideo(localPath, fileId, job, bitrate);
+        console.log(`✅ HLS playlist created for [${bitrate}]`);
 
-        console.log(`⏳ Initiating HLS segmenting for ${fileId} for ${url.bitrate} bitrate...`);
-        const playlistPath = await segmentVideo(localFilePath, fileId, job, url.bitrate);
-        console.log(`✅ HLS playlist created at ${playlistPath}`);
+        console.log(`☁️  Uploading segmented files to S3 for ${fileId} [${bitrate}]...`);
+        await uploadSegmentedVideos(playlistPath, fileId, userId, bitrate);
+        console.log(`✅ All HLS uploads complete for job ${job.id} [${bitrate}].`);
 
-
-        console.log(`☁️  Uploading segmented files to S3 for ${fileId} with ${url.bitrate} bitrate...`);
-        await uploadSegmentedVideos(playlistPath, fileId, userId, url.bitrate);
-        console.log(`✅ All hls uploads complete for job ${job.id}.`);
+        // Delete the transcoded source file ONLY after successful S3 upload
+        if (fs.existsSync(localPath)) {
+            fs.unlinkSync(localPath);
+            console.log(`🗑️  Deleted transcoded source: ${localPath}`);
+        }
     }));
+
+    // Clean up parent directories if empty
+    const downloadsDir = path.dirname(transcodedFiles[0]?.localPath ?? '');
+    if (downloadsDir && fs.existsSync(downloadsDir)) {
+        const remaining = fs.readdirSync(downloadsDir);
+        if (remaining.length === 0) {
+            fs.rmSync(downloadsDir, { recursive: true });
+            console.log(`🗑️  Removed empty downloads directory: ${downloadsDir}`);
+        }
+    }
 
 }, {
     connection: redis as any,
 });
 
-hlsWorker.on("completed", () => {
-    exec("rm -rf hlsDownloads", (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return;
-        }
-        console.log('Successfully cleaned up hlsDownloads directory');
-    })
-})
+hlsWorker.on("completed", (job) => {
+    console.log(`HLS Job ${job?.id} has completed successfully!`);
+});
 
 hlsWorker.on("failed", (job, err) => {
-    console.log(`Job ${job?.id} has failed with error: ${err.message}`);
-})
+    console.log(`HLS Job ${job?.id} has failed with error: ${err.message}`);
+});

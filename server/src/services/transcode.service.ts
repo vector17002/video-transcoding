@@ -84,6 +84,13 @@ export const transcodeVideo = async (inputFilePath: string, fileId: string): Pro
     });
 
     await Promise.all(transcodePromises);
+
+    // Delete the original downloaded file — transcoded copies exist on disk now
+    if (fs.existsSync(inputFilePath)) {
+        fs.unlinkSync(inputFilePath);
+        console.log(`🗑️  Deleted original download: ${inputFilePath}`);
+    }
+
     return outputFiles;
 };
 
@@ -96,7 +103,7 @@ export const uploadTranscodedFiles = async (outputFiles: string[], fileId: strin
         const fileName = path.basename(filePath);
         // Extract resolution from filename (e.g. "fileId_720p.mp4" -> "720p")
         const resolution = fileName.replace(`${fileId}_`, '').replace('.mp4', '');
-        const s3Key = `${currentEnv}/users/${userId}/original/${fileId}/${resolution}.mp4`;
+        const s3Key = `${currentEnv}/users/${userId}/${fileId}/resolutions/${resolution}.mp4`;
 
         const fileBuffer = fs.readFileSync(filePath);
 
