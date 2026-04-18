@@ -1,71 +1,9 @@
-import { getDownloadUrl } from "../utils/getPresignedUrl.js";
 import { type Job } from "bullmq";
-import axios from "axios";
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
 import ffmpeg from "fluent-ffmpeg";
 import s3Client from "../config/s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-
-const bitRateFiles = [
-    "1080p",
-    "720p",
-    "480p",
-    "360p"
-]
-
-export type VideoDownloadSignedUrlsWithBitrates = {
-    bitrate: string;
-    url: string;
-}
-
-export const getPreSignedUrlForDownloadHls = async (fileId: string, userId: string) => {
-    const currentEnv = process.env.NODE_ENV === 'development' ? 'dev' : 'prod';
-    const baseVideoObjectId = `${currentEnv}/users/${userId}/original/${fileId}`;
-
-    const videoDownloadSignedUrls: VideoDownloadSignedUrlsWithBitrates[] = [];
-
-    await Promise.all(bitRateFiles.map(async (bitRateFile) => {
-        const videoObjectId = `${baseVideoObjectId}/${bitRateFile}.mp4`
-        const videoDownloadSignedUrl = await getDownloadUrl(videoObjectId)
-
-        if (!videoDownloadSignedUrl) {
-            throw new Error(`Video download url is not found for file ${baseVideoObjectId} for bitrate ${bitRateFile}`);
-        }
-
-        videoDownloadSignedUrls.push({ bitrate: bitRateFile, url: videoDownloadSignedUrl })
-    }))
-
-    return videoDownloadSignedUrls
-}
-
-export const downloadObjectFromPreSignedUrlWithBitrate = async (videoDownloadSignedUrl: string, fileId: string, job: Job, bitrate: string) => {
-    // Download the video as a buffer
-    const response = await axios.get(videoDownloadSignedUrl, { responseType: 'arraybuffer' });
-
-    if (response.status !== 200)
-        console.log(`Video download failed for hls job id ${job.id}`)
-
-    const videoBuffer = response.data;
-
-    // Ensure downloads directory exists (hlsDownloads/{fileId}/{bitrate})
-    const downloadsDir = path.join(__dirname, '..', '..', 'hlsDownloads', fileId);
-    if (!fs.existsSync(downloadsDir)) {
-        fs.mkdirSync(downloadsDir, { recursive: true });
-    }
-
-    // Save the buffer to the local repository
-    const localFilePath = path.join(downloadsDir, `${bitrate}.mp4`);
-    fs.writeFileSync(localFilePath, videoBuffer);
-    console.log(`✅ Video downloaded successfully to ${localFilePath} for hls job ${job.id}`);
-
-    return localFilePath;
-}
 
 export const segmentVideo = async (localFilePath: string, fileId: string, job: Job, bitrate: string): Promise<string> => {
     // Output directory: hlsDownloads/{fileId}/{bitrate}/
@@ -82,6 +20,7 @@ export const segmentVideo = async (localFilePath: string, fileId: string, job: J
 
         ffmpeg(localFilePath)
             .outputOptions([
+                '-y',                     // overwrite existing files
                 '-codec copy',            // no re-encoding, just repackage
                 '-start_number 0',
                 '-hls_time 6',           // 10-second segments
@@ -109,8 +48,8 @@ export const segmentVideo = async (localFilePath: string, fileId: string, job: J
 
 export const uploadSegmentedVideos = async (playlistPath: string, fileId: string, userId: string, bitrate: string): Promise<string[]> => {
     const currentEnv = process.env.NODE_ENV === 'development' ? 'dev' : 'prod';
-    const bucket = process.env.HLS_S3_BUCKET_NAME;
-    const s3BaseKey = `${currentEnv}/users/${userId}/${fileId}/${bitrate}`;
+    const bucket = process.env.S3_BUCKET_NAME;
+    const s3BaseKey = `${currentEnv}/users/${userId}/${fileId}/hls/${bitrate}`;
 
     // The playlist lives in the segment output directory — read all files from there
     const segmentDir = path.dirname(playlistPath);
@@ -134,8 +73,18 @@ export const uploadSegmentedVideos = async (playlistPath: string, fileId: string
         await s3Client.send(command);
         console.log(`☁️  Uploaded ${fileName} to S3: ${s3Key}`);
         uploadedKeys.push(s3Key);
+
+        // Delete the file from disk right after upload
+        fs.unlinkSync(filePath);
+        console.log(`🗑️  Deleted local file: ${filePath}`);
     }));
 
-    console.log(`✅ All HLS files uploaded to S3 for ${fileId} [${bitrate}]`);
+    // Remove the now-empty segment directory
+    if (fs.existsSync(segmentDir)) {
+        fs.rmSync(segmentDir, { recursive: true });
+        console.log(`🗑️  Removed segment directory: ${segmentDir}`);
+    }
+
+    console.log(`✅ All HLS files uploaded & cleaned up for ${fileId} [${bitrate}]`);
     return uploadedKeys;
 }

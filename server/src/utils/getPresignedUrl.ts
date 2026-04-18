@@ -6,9 +6,9 @@ import { generateId } from "../utils/generateId.js";
 const BUCKET = process.env.S3_BUCKET_NAME;
 const environment = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 
-export const getUploadUrl = async ({ userId , contentType }: { userId: string  , contentType: string}) => {
+export const getUploadUrl = async ({ userId, contentType }: { userId: string, contentType: string }) => {
     const fileId = generateId();
-    const key = `${environment}/users/${userId}/original/${fileId}`;
+    const key = `${environment}/users/${userId}/${fileId}/original`;
 
     const command = new PutObjectCommand({ Bucket: BUCKET, Key: key, ContentType: contentType || "application/octet-stream" });
     const url = await getSignedUrl(s3Client, command, { expiresIn: 600 * 5 });

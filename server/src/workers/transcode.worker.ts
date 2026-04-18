@@ -1,13 +1,12 @@
-import { tryCatch, Worker, type Job } from "bullmq";
+import { Worker, type Job } from "bullmq";
 import { redis } from "../config/redis.js";
 import { downloadObjectFromPreSignedUrl, getPreSignedUrlForDownload, transcodeVideo, uploadTranscodedFiles } from "../services/transcode.service.js";
 import path from "path";
-import { fileURLToPath } from "url";
-import { exec } from "child_process";
 import { hlsQueue } from "./hls.queue.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { thumbnailQueue } from "./thumbnail.queue.js";
+import { db } from "../config/db.js";
+import { eq } from "drizzle-orm";
+import { videoTable } from "../models/video.model.js";
 
 // ──────────────────────────────────────────────────────────
 // 🧪 TEST CONFIG: Simulate failures to observe exponential backoff
@@ -53,24 +52,54 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
     //     console.log(`✅ 🧪 Attempt ${currentAttempt} — past simulated failure threshold, proceeding normally!`);
     // }
 
+    await db.update(videoTable).set({
+        trancodeStatus: 'processing'
+    }).where(eq(videoTable.id, fileId))
+
     const videoDownloadSignedUrl = await getPreSignedUrlForDownload(fileId, userId);
 
     if (!videoDownloadSignedUrl) {
-        console.log(`❌ Presigned url failed for job ${job.id}.`);
+        await db.update(videoTable).set({
+            status: 'failed',
+            trancodeStatus: 'failed',
+        }).where(eq(videoTable.id, fileId));
+
+        console.log(`❌ Presigned url failed for job ${job.id} for file ${fileId}.`);
         return;
     }
 
-    const localFilePath = await downloadObjectFromPreSignedUrl(videoDownloadSignedUrl, fileId, job)
+    const localFilePath = await downloadObjectFromPreSignedUrl(videoDownloadSignedUrl, fileId, job.id!)
 
-    console.log(`⏳ Initiating bulk FFmpeg transcodes for ${fileId}...`);
+    // Starting creating thumbnail for the video
+    await thumbnailQueue.add("thumbnail", { fileId, userId, localFilePath });
+    await db.update(videoTable).set({
+        thumbnailStatus: 'processing'
+    }).where(eq(videoTable.id, fileId))
+
+    // Starting transcode for the video
     const outputFiles = await transcodeVideo(localFilePath, fileId);
-    console.log(`✅ All transcoding finished for job ${job.id}. Outputs: ${outputFiles.join(', ')}`)
-    console.log(`☁️  Uploading transcoded files to S3 for ${fileId}...`);
-    const uploadedKeys = await uploadTranscodedFiles(outputFiles, fileId, userId);
-    console.log(`✅ All uploads complete for job ${job.id}. Keys: ${uploadedKeys.join(', ')}`);
 
-    await hlsQueue.add("hls", { fileId, userId })
-    console.log(`HLS job added for fileId ${fileId}`)
+    // Uploading transcoded video
+    await uploadTranscodedFiles(outputFiles, fileId, userId);
+
+    // Build a map of bitrate → local file path for the HLS worker
+    // so it can segment directly from disk instead of re-downloading from S3
+    const transcodedFiles = outputFiles.map((filePath) => {
+        const fileName = path.basename(filePath);
+        const bitrate = fileName.replace(`${fileId}_`, '').replace('.mp4', '');
+        return { bitrate, localPath: filePath };
+    });
+
+    // Starting HLS for the videos of different bitrate
+    await hlsQueue.add("hls", { fileId, userId, transcodedFiles });
+    console.log(`HLS job added for fileId ${fileId} with ${transcodedFiles.length} local transcoded files`);
+
+    // Updating the DB
+    await db.update(videoTable).set({
+        hlsStatus: 'processing',
+        trancodeStatus: 'completed'
+    }).where(eq(videoTable.id, fileId))
+
 }, {
     connection: redis as any,
     settings: {
@@ -87,21 +116,10 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
 });
 
 transcodeWorker.on("completed", (job) => {
-    exec("rm -rf downloads", (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return;
-        }
-        console.log('Successfully cleaned up downloads directory');
-    })
     console.log(`Job ${job.id} has completed successfully!`);
 });
 
-transcodeWorker.on("failed", (job, err) => {
+transcodeWorker.on("failed", async (job, err) => {
     const attempt = job?.attemptsMade ?? 0;
     const maxAttempts = job?.opts.attempts ?? 5;
     const nextDelay = BASE_DELAY * Math.pow(2, attempt - 1);
@@ -110,6 +128,9 @@ transcodeWorker.on("failed", (job, err) => {
     if (attempt < maxAttempts) {
         console.log(`   ⏳ Next retry in ~${(nextDelay / 1000).toFixed(1)}s (exponential backoff: ${BASE_DELAY / 1000}s × 2^${attempt - 1})`);
     } else {
+        await db.update(videoTable).set({
+            trancodeStatus: 'failed'
+        }).where(eq(videoTable.id, job?.data.fileId))
         console.log(`   🚫 No more retries — job has permanently failed.`);
     }
 });

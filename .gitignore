@@ -8,3 +8,5 @@ coverage/
 *.log
 downloads/
 hlsDownloads/
+server/logs/
+*.log

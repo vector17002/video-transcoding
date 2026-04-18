@@ -4,9 +4,7 @@ import authRouter from "./routes/auth.routes.js";
 import s3Router from "./routes/s3.routes.js";
 import { authMiddleware } from "./middleware/auth.middleware.js";
 
-// Initialize BullMQ workers
-import "./workers/transcode.worker.js";
-import "./workers/hls.worker.js";
+// Workers are started separately via worker.ts (see docker-compose.yml)
 
 const app = express();
 app.use(cors({
