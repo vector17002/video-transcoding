@@ -1,4 +1,4 @@
-import { createUser, findUserByEmail } from "../services/user.store.js";
+import { createUser, findUserByEmail } from "../services/user.service.js";
 import type { Request, Response } from "express";
 import { comparePassword, hashPassword } from "../services/auth.service.js";
 import { createToken } from "../utils/jwt.js";
@@ -12,14 +12,18 @@ export const registerUser = async (req: Request, res: Response) => {
         return res.status(400).json({ message: "Email and password are required" });
     }
 
-    const existingUser = findUserByEmail(email);
+    const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
         return res.status(400).json({ message: "User already exists" });
     }
 
     const hashedPassword = hashPassword(password);
-    const user = createUser({ email, password: hashedPassword });
+    const user = await createUser({ email, password: hashedPassword });
+
+    if (!user) {
+        return res.status(400).json({ message: "User not created" });
+    }
 
     const token = createToken(user);
     return res.status(201).json({ message: "User created successfully", user, token });
@@ -34,7 +38,7 @@ export const loginUser = async (req: Request, res: Response) => {
         return res.status(400).json({ message: "Email and password are required" });
     }
 
-    const user = findUserByEmail(email);
+    const user = await findUserByEmail(email);
     if (!user) {
         return res.status(400).json({ message: "User not found" });
     }

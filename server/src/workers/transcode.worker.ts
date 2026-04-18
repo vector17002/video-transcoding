@@ -1,9 +1,12 @@
-import { tryCatch, Worker, type Job } from "bullmq";
+import { Worker, type Job } from "bullmq";
 import { redis } from "../config/redis.js";
 import { downloadObjectFromPreSignedUrl, getPreSignedUrlForDownload, transcodeVideo, uploadTranscodedFiles } from "../services/transcode.service.js";
 import path from "path";
 import { hlsQueue } from "./hls.queue.js";
 import { thumbnailQueue } from "./thumbnail.queue.js";
+import { db } from "../config/db.js";
+import { eq } from "drizzle-orm";
+import { videoTable } from "../models/video.model.js";
 
 // ──────────────────────────────────────────────────────────
 // 🧪 TEST CONFIG: Simulate failures to observe exponential backoff
@@ -49,28 +52,35 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
     //     console.log(`✅ 🧪 Attempt ${currentAttempt} — past simulated failure threshold, proceeding normally!`);
     // }
 
+    await db.update(videoTable).set({
+        trancodeStatus: 'processing'
+    }).where(eq(videoTable.id, fileId))
+
     const videoDownloadSignedUrl = await getPreSignedUrlForDownload(fileId, userId);
 
     if (!videoDownloadSignedUrl) {
-        console.log(`❌ Presigned url failed for job ${job.id}.`);
+        await db.update(videoTable).set({
+            status: 'failed',
+            trancodeStatus: 'failed',
+        }).where(eq(videoTable.id, fileId));
+
+        console.log(`❌ Presigned url failed for job ${job.id} for file ${fileId}.`);
         return;
     }
 
-    const localFilePath = await downloadObjectFromPreSignedUrl(videoDownloadSignedUrl, fileId, job)
+    const localFilePath = await downloadObjectFromPreSignedUrl(videoDownloadSignedUrl, fileId, job.id!)
 
     // Starting creating thumbnail for the video
     await thumbnailQueue.add("thumbnail", { fileId, userId, localFilePath });
-    console.log(`Thumbnail job added for fileId ${fileId} with ${localFilePath} local file`);
+    await db.update(videoTable).set({
+        thumbnailStatus: 'processing'
+    }).where(eq(videoTable.id, fileId))
 
     // Starting transcode for the video
-    console.log(`⏳ Initiating bulk FFmpeg transcodes for ${fileId}...`);
     const outputFiles = await transcodeVideo(localFilePath, fileId);
-    console.log(`✅ All transcoding finished for job ${job.id}.`);
 
     // Uploading transcoded video
-    console.log(`☁️  Uploading transcoded files to S3 for ${fileId}...`);
     await uploadTranscodedFiles(outputFiles, fileId, userId);
-    console.log(`✅ All uploads complete for job ${job.id}.`);
 
     // Build a map of bitrate → local file path for the HLS worker
     // so it can segment directly from disk instead of re-downloading from S3
@@ -83,6 +93,13 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
     // Starting HLS for the videos of different bitrate
     await hlsQueue.add("hls", { fileId, userId, transcodedFiles });
     console.log(`HLS job added for fileId ${fileId} with ${transcodedFiles.length} local transcoded files`);
+
+    // Updating the DB
+    await db.update(videoTable).set({
+        hlsStatus: 'processing',
+        trancodeStatus: 'completed'
+    }).where(eq(videoTable.id, fileId))
+
 }, {
     connection: redis as any,
     settings: {
@@ -102,7 +119,7 @@ transcodeWorker.on("completed", (job) => {
     console.log(`Job ${job.id} has completed successfully!`);
 });
 
-transcodeWorker.on("failed", (job, err) => {
+transcodeWorker.on("failed", async (job, err) => {
     const attempt = job?.attemptsMade ?? 0;
     const maxAttempts = job?.opts.attempts ?? 5;
     const nextDelay = BASE_DELAY * Math.pow(2, attempt - 1);
@@ -111,6 +128,9 @@ transcodeWorker.on("failed", (job, err) => {
     if (attempt < maxAttempts) {
         console.log(`   ⏳ Next retry in ~${(nextDelay / 1000).toFixed(1)}s (exponential backoff: ${BASE_DELAY / 1000}s × 2^${attempt - 1})`);
     } else {
+        await db.update(videoTable).set({
+            trancodeStatus: 'failed'
+        }).where(eq(videoTable.id, job?.data.fileId))
         console.log(`   🚫 No more retries — job has permanently failed.`);
     }
 });

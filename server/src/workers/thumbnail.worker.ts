@@ -1,6 +1,9 @@
 import { Worker, type Job } from "bullmq";
 import { redis } from "../config/redis.js";
 import { generateThumbnails, setDefaultThumbnail, uploadVideoThumbnails } from "../services/thumbnail.service.js";
+import { db } from "../config/db.js";
+import { videoTable } from "../models/video.model.js";
+import { eq } from "drizzle-orm";
 
 export const thumbnailWorker = new Worker("thumbnailQueue", async (job: Job) => {
     const { fileId, userId, localFilePath } = job.data as
@@ -8,8 +11,6 @@ export const thumbnailWorker = new Worker("thumbnailQueue", async (job: Job) => 
 
     console.log(localFilePath)
     const filePathArray = localFilePath.split('/');
-    const fileName = filePathArray[filePathArray.length - 1] as string;
-    const fileNameWithoutExtension = fileName.split('.')[0];
     const filePath = filePathArray.slice(0, filePathArray.length - 1).join('/');
     const thumbnailPath = `${filePath}/thumbmnail/${fileId}`;
 
@@ -31,11 +32,17 @@ export const thumbnailWorker = new Worker("thumbnailQueue", async (job: Job) => 
     connection: redis as any,
 });
 
-thumbnailWorker.on("completed", (job) => {
+thumbnailWorker.on("completed", async (job) => {
+    await db.update(videoTable).set({
+        thumbnailStatus: 'completed'
+    }).where(eq(videoTable.id, job.data.fileId));
     console.log(`Thumbnail Job ${job?.id} has completed successfully!`);
 });
 
-thumbnailWorker.on("failed", (job, err) => {
+thumbnailWorker.on("failed", async (job, err) => {
+    await db.update(videoTable).set({
+        thumbnailStatus: 'failed'
+    }).where(eq(videoTable.id, job?.data.fileId));
     console.log(`Thumbnail Job ${job?.id} has failed with error: ${err.message}`);
 });
 

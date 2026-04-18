@@ -1,5 +1,6 @@
 import 'dotenv/config.js'
 import './utils/logger.js'
+import './config/db.js'
 
 // Initialize BullMQ workers
 import './workers/transcode.worker.js'

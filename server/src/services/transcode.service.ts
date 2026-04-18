@@ -1,6 +1,5 @@
 import { getDownloadUrl } from "../utils/getPresignedUrl.js";
 import axios from "axios";
-import type { Job } from "bullmq";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -24,12 +23,12 @@ export const getPreSignedUrlForDownload = async (fileId: string, userId: string)
     return videoDownloadSignedUrl
 }
 
-export const downloadObjectFromPreSignedUrl = async (videoDownloadSignedUrl: string, fileId: string, job: Job) => {
+export const downloadObjectFromPreSignedUrl = async (videoDownloadSignedUrl: string, fileId: string, jobId: string) => {
     // Download the video as a buffer
     const response = await axios.get(videoDownloadSignedUrl, { responseType: 'arraybuffer' });
 
     if (response.status !== 200)
-        console.log(`Video download failed for transcode job id ${job.id}`)
+        console.log(`Video download failed for transcode job id ${jobId}`)
 
     const videoBuffer = response.data;
 
@@ -42,7 +41,7 @@ export const downloadObjectFromPreSignedUrl = async (videoDownloadSignedUrl: str
     // Save the buffer to the local repository
     const localFilePath = path.join(downloadsDir, fileId);
     fs.writeFileSync(localFilePath, videoBuffer);
-    console.log(`✅ Video downloaded successfully to ${localFilePath} for transcode job ${job.id}`);
+    console.log(`✅ Video downloaded successfully to ${localFilePath} for transcode job ${jobId}`);
 
     return localFilePath;
 }

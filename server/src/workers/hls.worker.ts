@@ -3,6 +3,9 @@ import { redis } from "../config/redis.js";
 import { segmentVideo, uploadSegmentedVideos } from "../services/hls.service.js";
 import fs from "fs";
 import path from "path";
+import { db } from "../config/db.js";
+import { eq } from "drizzle-orm";
+import { videoTable } from "../models/video.model.js";
 
 interface TranscodedFile {
     bitrate: string;
@@ -55,10 +58,16 @@ export const hlsWorker = new Worker("hlsQueue", async (job: Job) => {
     connection: redis as any,
 });
 
-hlsWorker.on("completed", (job) => {
+hlsWorker.on("completed", async (job) => {
+    await db.update(videoTable).set({
+        hlsStatus: 'completed'
+    }).where(eq(videoTable.id, job.data.fileId))
     console.log(`HLS Job ${job?.id} has completed successfully!`);
 });
 
-hlsWorker.on("failed", (job, err) => {
+hlsWorker.on("failed", async (job, err) => {
+    await db.update(videoTable).set({
+        hlsStatus: 'failed'
+    }).where(eq(videoTable.id, job?.data.fileId))
     console.log(`HLS Job ${job?.id} has failed with error: ${err.message}`);
 });
