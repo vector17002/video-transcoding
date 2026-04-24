@@ -1,0 +1,2 @@
+ALTER TABLE "videoTable" ADD COLUMN "transcript_key" text;--> statement-breakpoint
+ALTER TABLE "videoTable" ADD CONSTRAINT "videoTable_user_id_userTable_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."userTable"("id") ON DELETE no action ON UPDATE no action;

@@ -41,7 +41,8 @@ thumbnailWorker.on("completed", async (job) => {
 
 thumbnailWorker.on("failed", async (job, err) => {
     await db.update(videoTable).set({
-        thumbnailStatus: 'failed'
+        thumbnailStatus: 'failed',
+        status: 'failed'
     }).where(eq(videoTable.id, job?.data.fileId));
     console.log(`Thumbnail Job ${job?.id} has failed with error: ${err.message}`);
 });

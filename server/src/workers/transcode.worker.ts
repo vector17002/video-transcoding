@@ -4,6 +4,7 @@ import { downloadObjectFromPreSignedUrl, getPreSignedUrlForDownload, transcodeVi
 import path from "path";
 import { hlsQueue } from "./hls.queue.js";
 import { thumbnailQueue } from "./thumbnail.queue.js";
+import { transcribeQueue } from "./transcribe.queue.js";
 import { db } from "../config/db.js";
 import { eq } from "drizzle-orm";
 import { videoTable } from "../models/video.model.js";
@@ -94,6 +95,10 @@ export const transcodeWorker = new Worker("transcodeQueue", async (job: Job) => 
     await hlsQueue.add("hls", { fileId, userId, transcodedFiles });
     console.log(`HLS job added for fileId ${fileId} with ${transcodedFiles.length} local transcoded files`);
 
+    // Dispatch transcription job — picked up by the ai-worker container
+    await transcribeQueue.add("transcribe", { fileId, userId });
+    console.log(`🎙️  Transcription job queued for fileId: ${fileId}`);
+
     // Updating the DB
     await db.update(videoTable).set({
         hlsStatus: 'processing',
@@ -129,7 +134,8 @@ transcodeWorker.on("failed", async (job, err) => {
         console.log(`   ⏳ Next retry in ~${(nextDelay / 1000).toFixed(1)}s (exponential backoff: ${BASE_DELAY / 1000}s × 2^${attempt - 1})`);
     } else {
         await db.update(videoTable).set({
-            trancodeStatus: 'failed'
+            trancodeStatus: 'failed',
+            status: 'failed'
         }).where(eq(videoTable.id, job?.data.fileId))
         console.log(`   🚫 No more retries — job has permanently failed.`);
     }

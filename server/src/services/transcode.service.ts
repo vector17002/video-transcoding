@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 export const getPreSignedUrlForDownload = async (fileId: string, userId: string) => {
     const currentEnv = process.env.NODE_ENV === 'development' ? 'dev' : 'prod';
-    const videoObjectId = `${currentEnv}/users/${userId}/original/${fileId}`;
+    const videoObjectId = `${currentEnv}/users/${userId}/${fileId}/original`;
 
     const videoDownloadSignedUrl = await getDownloadUrl(videoObjectId)
 
