@@ -24,13 +24,12 @@ services:
       - ./server/.env
     environment:
       - IOREDIS_URL=redis://redis:6379
-      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       redis:
         condition: service_healthy
     restart: unless-stopped
 
-  # ── Workers (transcode + HLS + thumbnail) ───────────────────────────
+  # ── Transcode Worker (FFmpeg — HLS + thumbnails) ─────────
   worker:
     build:
       context: ./server
@@ -40,15 +39,36 @@ services:
       - ./server/.env
     environment:
       - IOREDIS_URL=redis://redis:6379
-      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       redis:
         condition: service_healthy
     restart: unless-stopped
-    # Workers may need more memory for FFmpeg transcoding
     deploy:
       resources:
         limits:
+          memory: 2G
+
+  # ── AI Worker (FFmpeg + faster-whisper transcription) ────
+  ai-worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: ai-worker
+      args:
+        # Change to tiny/small/medium/large as needed
+        WHISPER_MODEL: base
+    env_file:
+      - ./server/.env
+    environment:
+      - IOREDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          # faster-whisper base model needs ~1 GB; bump for larger models
           memory: 2G
 
 volumes:

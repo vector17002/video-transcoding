@@ -67,7 +67,8 @@ hlsWorker.on("completed", async (job) => {
 
 hlsWorker.on("failed", async (job, err) => {
     await db.update(videoTable).set({
-        hlsStatus: 'failed'
+        hlsStatus: 'failed',
+        status: 'failed'
     }).where(eq(videoTable.id, job?.data.fileId))
     console.log(`HLS Job ${job?.id} has failed with error: ${err.message}`);
 });
