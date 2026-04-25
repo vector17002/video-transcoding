@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #ffffff;
+  --font-family-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Force white canvas — overrides Tailwind v4 preflight which greys the html element */
+html {
+  background-color: #ffffff;
+}
+
+body {
+  background-color: #ffffff;
+  color: #111111;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
