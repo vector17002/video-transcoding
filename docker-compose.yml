@@ -48,7 +48,7 @@ services:
         limits:
           memory: 2G
 
-  # ── AI Worker (FFmpeg + faster-whisper transcription) ────
+  # ── AI Worker (Whisper transcription & Gemini summarization) ───
   ai-worker:
     build:
       context: ./server
@@ -70,6 +70,7 @@ services:
         limits:
           # faster-whisper base model needs ~1 GB; bump for larger models
           memory: 2G
+
 
 volumes:
   redis_data:

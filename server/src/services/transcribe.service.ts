@@ -11,8 +11,8 @@ import s3Client from "../config/s3.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path to the Python binary inside the venv baked into the ai-worker image
-const PYTHON_BIN = '/opt/whisper-venv/bin/python3';
+// Path to the Python binary inside the venv or system PATH
+const PYTHON_BIN = process.env.PYTHON_BIN ?? 'python3';
 
 // Model is set via ARG/ENV in the Dockerfile (default: base)
 const WHISPER_MODEL = process.env.WHISPER_MODEL ?? 'base';
