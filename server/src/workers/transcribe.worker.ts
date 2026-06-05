@@ -10,6 +10,7 @@ import {
 import { db } from "../config/db.js";
 import { eq } from "drizzle-orm";
 import { videoTable } from "../models/video.model.js";
+import { SummaryQueue } from "./summary.queue.js";
 
 export const transcribeWorker = new Worker("transcribeQueue", async (job: Job) => {
     const { fileId, userId } = job.data as { fileId: string; userId: string };
@@ -35,13 +36,17 @@ export const transcribeWorker = new Worker("transcribeQueue", async (job: Job) =
     // 4. Upload transcript JSON to S3
     const transcriptKey = await uploadTranscript(transcript, fileId, userId);
 
-    // 5. Persist the S3 key in the DB
+    // 5. Start summary job
+    console.log('Added to summary queue')
+    await SummaryQueue.add('summary', { transcript: transcript.plainText, fileId, userId });
+
+    // 6. Persist the S3 key in the DB
     await db.update(videoTable).set({
         transcriptKey,
         transcriptStatus: 'completed',
     }).where(eq(videoTable.id, fileId));
 
-    // 6. Clean up local temp files
+    // 7. Clean up local temp files
     cleanupTranscribeFiles(videoPath, audioPath);
 
 }, {

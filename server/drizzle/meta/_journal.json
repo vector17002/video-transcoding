@@ -15,6 +15,27 @@
       "when": 1776997181954,
       "tag": "0001_glorious_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778869750621,
+      "tag": "0002_sparkling_scream",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1778941625392,
+      "tag": "0003_polite_stingray",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1780675325395,
+      "tag": "0004_cooing_red_skull",
+      "breakpoints": true
     }
   ]
 }

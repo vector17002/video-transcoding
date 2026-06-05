@@ -50,41 +50,35 @@ CMD ["node", "dist/worker.js"]
 
 
 # ── Stage 3c: AI Worker (FFmpeg + faster-whisper) ──────────────────────────
-# Uses node:22-slim (Debian) instead of Alpine because PyAV (a faster-whisper
-# dependency) has no pre-built musl/Alpine wheels and its Cython compilation
-# fails on Python 3.12 + Alpine. Debian has pre-built wheels → no compilation
-# needed, faster build, smaller attack surface.
-#
-# Available WHISPER_MODEL values (ascending size / accuracy):
-#   tiny (~75 MB) | base (~150 MB) | small (~500 MB) | medium | large
-FROM node:22-slim AS ai-worker
+# Uses python:3.11-slim as the base to avoid installing python3, pip, and venv via apt-get,
+# and copies Node.js from node:22-slim.
+FROM python:3.11-slim AS ai-worker
 
-# 1. System packages (Debian-based)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        ffmpeg \
-        python3 \
-        python3-pip \
-        python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+# 1. Copy Node.js from official slim image
+COPY --from=node:22-slim /usr/local /usr/local
 
-# 2. Isolated Python venv + faster-whisper (CTranslate2-based, no PyTorch)
-#    Pre-built PyAV wheels on Debian → no compilation required.
-ENV VIRTUAL_ENV=/opt/whisper-venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+# 2. System packages (Debian-based)
+#    Use BuildKit cache mounts to cache apt package downloads
+RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+        ffmpeg
 
-RUN python3 -m venv "$VIRTUAL_ENV" && \
-    pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir faster-whisper
+# 3. Install faster-whisper (CTranslate2-based, no PyTorch)
+#    Use BuildKit cache mount to cache pip packages across builds
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip && \
+    pip install faster-whisper
 
-# 3. Pre-download model weights at build time so startup is instant
-#    compute_type=int8 → efficient CPU inference, no accuracy loss for most tasks
+# 4. Pre-download model weights at build time so startup is instant
 ARG WHISPER_MODEL=base
 ENV WHISPER_MODEL=${WHISPER_MODEL}
 RUN python3 -c "\
-from faster_whisper import WhisperModel; \
-WhisperModel('${WHISPER_MODEL}', device='cpu', compute_type='int8')"
+from huggingface_hub import snapshot_download; \
+snapshot_download(repo_id='Systran/faster-whisper-${WHISPER_MODEL}')"
 
-# 4. Node.js application
+# 5. Node.js application
 WORKDIR /app
 
 COPY --from=prod-deps /app/node_modules ./node_modules

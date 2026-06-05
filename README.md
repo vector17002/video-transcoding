@@ -26,10 +26,12 @@ This README is designed to provide context for AI assistants or human developers
    - Once the S3 upload finishes, the frontend signals the backend via `/api/s3/process` (passing the `fileId`).
 4. **Background Workers (BullMQ)**: 
    - The `/api/s3/process` endpoint enqueues jobs onto Redis.
-   - Separate worker processes pick up these jobs to execute heavy FFmpeg commands asynchronously.
-   - **Transcode Worker**: Processes/compresses the original video.
-   - **HLS Worker**: Converts the video into partitioned HLS streams for adaptive bitrate streaming.
-   - **Thumbnail Worker**: Extracts static thumbnails.
+  - Separate worker processes pick up these jobs to execute heavy commands asynchronously.
+  - **Transcode Worker**: Processes/compresses the original video.
+  - **HLS Worker**: Converts the video into partitioned HLS streams for adaptive bitrate streaming.
+  - **Thumbnail Worker**: Extracts static thumbnails.
+  - **Transcribe Worker**: (AI Worker) Downloads video, extracts audio, performs speech-to-text via `faster-whisper`, uploads the transcript file to S3, and enqueues the transcript's plain text onto the `summary` queue.
+  - **Summary Worker**: (AI Worker) Takes the plain text transcript, invokes the Gemini API via `deepagents` (`gemini-2.5-flash`), saves the generated summary directly in the database (`summary` column), and updates the summary status.
 
 ## Directory Structure
 ```text
@@ -40,18 +42,19 @@ videoThumbnailProcessingPOC/
 │   ├── src/
 │   │   ├── app.ts        # Express app middleware and router mounting.
 │   │   ├── server.ts     # Main API server entrypoint.
-│   │   ├── worker.ts     # Standalone entrypoint for BullMQ workers.
+│   │   ├── worker.ts     # Standalone entrypoint for BullMQ transcode, HLS, and thumbnail workers.
+│   │   ├── ai-worker.ts  # Standalone entrypoint for BullMQ transcription and summarization workers.
 │   │   ├── routes/       # API route definitions (auth, s3).
 │   │   ├── controllers/  # API route action handlers.
 │   │   ├── middleware/   # Express middlewares (e.g., JWT auth verification).
 │   │   ├── models/       # Drizzle ORM schema definitions.
 │   │   ├── services/     # Business logic, notably S3 integration.
-│   │   └── workers/      # Queue and Worker definitions (transcode, hls, thumbnail).
+│   │   └── workers/      # Queue and Worker definitions (transcode, hls, thumbnail, transcribe, summary).
 │   ├── drizzle/          # Database migrations.
-│   ├── Dockerfile        # Multi-stage Dockerfile building both `api` and `worker` targets.
+│   ├── Dockerfile        # Multi-stage Dockerfile building `api`, `worker`, and `ai-worker` targets.
 │   ├── package.json      # Dependencies and scripts (drizzle-kit, build, dev).
 │   └── .env.example      # Template for required environment variables.
-└── docker-compose.yml    # Infrastructure orchestrator (Redis, Neon Postgres, API, Worker).
+└── docker-compose.yml    # Infrastructure orchestrator (Redis, Neon Postgres, API, Worker, AI Worker).
 ```
 
 ## Local Development Setup
@@ -70,10 +73,11 @@ videoThumbnailProcessingPOC/
    docker-compose up --build
    ```
    This command starts:
-   - `redis`: Used by BullMQ.
-   - `neon-local`: Local Neon PostgreSQL instance.
-   - `api`: Node server running on port 8080.
-   - `worker`: Node process dedicated strictly to processing the BullMQ video queues.
+    - `redis`: Used by BullMQ.
+    - `neon-local`: Local Neon PostgreSQL instance.
+    - `api`: Node server running on port 8080.
+    - `worker`: Node process dedicated strictly to processing the video/HLS/thumbnail transcoding queues.
+    - `ai-worker`: Node process dedicated to running the audio transcription and transcript summarization workers (requires a `GEMINI_API_KEY`).
 
 3. **Database Push (if running locally natively)**:
    ```bash
